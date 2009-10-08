@@ -1,0 +1,9 @@
+<form action="%link%" method="post">
+<input type="hidden" name="cmd" value="vote" />
+<input type="hidden" name="qID" value="%qID%" />
+	<strong>%question%</strong><br /><br />
+	%answers%
+	<input type="image" src="/images/vote.gif" alt="Голосовать" width="70" height="15" />
+	<input type="image" src="/images/result.gif" alt="Результаты" width="70" height="15" onClick = "document.location.href='%link%'; return false;" />
+</form>
+<br />

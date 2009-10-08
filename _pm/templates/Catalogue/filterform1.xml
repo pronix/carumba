@@ -1,0 +1,82 @@
+<container>
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="8"><img src="/images/pix.gif" width="8" height="8"/></td>
+                      <td valign="top"><table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#DCDDE0">
+                          <tr bgcolor="#FFFFFF"> 
+                            <td width="50%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="10">
+                                <tr valign="top"> 
+                                  <td width="50%"><p> <strong>Ваз 2101</strong></p>
+                                    <p><a href="/auto/bridges.html"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/></a>Показать 
+                                      все сразу<br/>
+                                      <a href="/auto/bridges.html"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/></a><a href="#" class="levm">Подвеска 
+                                      и Ходовая</a><br/>
+                                      <a href="/auto/bridges.html"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/></a><a href="#" class="levm">Двигатель</a><br/>
+                                      <a href="/auto/bridges.html"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/></a><a href="#" class="levm">Сцепление</a><br/>
+                                      <a href="/auto/bridges.html"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/></a><a href="#" class="levm">Тормозная 
+                                      система</a></p>
+                                    </td>
+                                  <td width="50%"><p><strong>Фильтр товаров</strong></p>
+                                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="#DCDDE0">
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td width="100">Производитель:</td>
+                                        <td><strong>
+                                          <select name="select2" class="input06" id="select2">
+                                            <option>Все производители</option>
+                                            <option>KAYABA (Япония)</option>
+                                            <option>COFAP (Бразилия)</option>
+                                          </select>
+                                          </strong></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td width="100">Цена:</td>
+                                        <td>от 
+                                          <input name="textarea2" type="text" class="input02" value=""/>
+                                          до 
+                                          <input name="textarea23" type="text" class="input02" value=""/>
+                                          руб. </td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td width="100">По названию:</td>
+                                        <td><input name="textarea22" type="text" class="input06" value=""/></td>
+                                      </tr>
+                                    </table>
+                                    <br/>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="100"><table width="90" height="15" border="0" cellpadding="0" cellspacing="0" bgcolor="#676971">
+                                            <tr> 
+                                              <td width="5" height="15"><a href="#"><img src="/images/po2_01.gif" alt="купить" width="5" height="15" border="0"/></a></td>
+                                              <td height="15" valign="top"><a href="#" class="whiteb2">фильтровать</a></td>
+                                              <td width="14" height="15"><a href="#"><img src="/images/po2_02.gif" alt="купить" width="14" height="15" border="0"/></a></td>
+                                            </tr>
+                                          </table></td>
+                                        <td><table width="110" height="15" border="0" cellpadding="0" cellspacing="0" bgcolor="#676971">
+                                            <tr> 
+                                              <td width="5" height="15"><a href="#"><img src="/images/po2_01.gif" alt="купить" width="5" height="15" border="0"/></a></td>
+                                              <td height="15" valign="top"><a href="#" class="whiteb2">сбросить фильтр</a></td>
+                                              <td width="14" height="15"><a href="#"><img src="/images/po2_02.gif" alt="купить" width="14" height="15" border="0"/></a></td>
+                                            </tr>
+                                          </table></td>
+                                      </tr>
+                                    </table> 
+                                  </td>
+                                </tr>
+                              </table>
+                              %pager%
+                            </td>
+                          </tr>
+                        </table></td>
+                      <td width="8"><img src="/images/pix.gif" width="8" height="8"/></td>
+                    </tr>
+                  </table>
+                  <img src="/images/pix.gif" width="10" height="10"/><br/>
+</container>
+
+<pager>
+                              <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                                <tr> 
+                                  <td width="50%" height="15">Страницы: %links%</td>
+                                </tr>
+                              </table>
+</pager>

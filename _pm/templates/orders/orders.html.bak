@@ -1,0 +1,78 @@
+<script language="javascript">
+
+function openPopupWindow (formURL, width, height)
+{
+  var Left = (screen.width - width) / 2;
+  var Top = (screen.height - height) / 2;
+  window.open(formURL,"","toolbar=0, scrollbars=yes,location=0,status=0,menubar=0,width="+width+",height="+height+",border=1,resizable=yes,left="+Left+",top="+Top);  
+};
+
+function doCommand(command)
+{
+	window.onunload = null;
+	//ordersForm.cmd.value = command;
+	ordersForm.submit();
+}
+
+function updateCardSt(userID)
+{
+	if (!confirm("Изменить статус карточки пользователя " + userID + " ?")) return;
+	ordersForm.submit();
+}
+
+</script>
+<form name="ordersForm" action="/carorders?cmd=%ordertype%&act=refresh" method="post">
+<input type="hidden" name="status" value="%stID%">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tblup">
+  <tr>
+    <td width="202"><img src="/images/carumba.gif" width="202" height="44"></td>
+    <td><table width="100%" height="44" border="0" cellpadding="5" cellspacing="5" bgcolor="#FFFFFF" class="tblin">
+        <tr bgcolor="#DBDBDB"> 
+            %orderCount1%
+            %orderCount2% 
+            %orderCount3%
+            %orderCount4% 
+            %orderCount5% 
+            %orderCount6% 
+            %orderCount7% 
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+
+<!-- top pager begin -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tblup">
+%pager%
+</table>
+<!-- top pager end -->
+
+<br>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#C6C6C6" class="tbl">
+  
+  <!-- legend begin -->
+  <tr bgcolor="#DBDBDB"> 
+    <td><strong>№ заказа</strong></td>
+    <td><strong> № п-ля</strong></td>
+    <td><strong>Инф. п-ля</strong></td>
+    <td bgcolor="#DBDBDB"><strong>Перечень заказа</strong></td>
+	<td>Сумма покупки</td>
+    <td><strong>Дата статуса</strong></td>
+    <td><strong>Дата поставки</strong></td>
+    <td><strong>Предоплата</strong></td>
+    <td><strong>Ответ на заказ</strong></td>
+    <td><strong>Статус карты</strong></td>
+    <td><strong>Статус заказа</strong></td>
+  </tr>
+   <!-- legend end -->
+%content%
+
+</table>
+<br>
+
+<!-- bottom pager begin -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tblup">
+%pager%
+</table>
+<!-- bottom pager end -->
+</form>

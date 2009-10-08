@@ -1,0 +1,89 @@
+<div class="blokinfo">
+<p><strong>Внимание:</strong></p>
+<ul>
+<li>После отправки анкеты, на Ваш e-mail будет отослано письмо</li>
+<li>Указанная вами марка автомобиля поможет улучшить качество получаемой Вами информации о распродаже</li>
+<li>Все поля данной анкеты обязательны для заполнения </li></ul>
+</div>
+%MSG% 
+
+<form onsubmit="return checkReg();" method=post><input type=hidden value=doUpdate name=action> 
+<div class="podbor">
+<table class="" cellspacing="1" cellpadding="5" bgColor=#cccccc border="0">
+<tbody>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Логин:</td>
+<td class=""><input class=input03 value=%login% name=login></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Пароль:</td>
+<td class=""><input class=input03 type=password value=%psw% name=psw></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Пароль повторно:</td>
+<td class=""><input class=input03 type=password value=%psw2% name=psw2></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>E-mail:</td>
+<td class=""><input class=input03 value=%email% name=email></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Фамилия:</td>
+<td class=""><input class=input03 value=%lastname% name=lastname></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Имя:</td>
+<td class=""><input class=input03 value=%firstname% name=firstname></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Отчество:</td>
+<td class=""><input class=input03 value=%surname% name=surname></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Ваш пол:</td>
+<td class=""><input type=radio %male% value=m name=sex> Мужской <input type=radio %female% value=f name=sex> Женский </td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Контактный телефон:</td>
+<td class=""><input class=input03 value=%phone% name=phone></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Регион:</td>
+<td class=""><select class=input03 name=region> <option value=Санкт-Петербург selected>Санкт-Петербург</option></select></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Город:</td>
+<td class=""><select class=input03 name=city> <option value=Санкт-Петербург selected>Санкт-Петербург</option></select></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Адрес доставки:</td>
+<td class=""><textarea class=input05 name=address>%address%</textarea></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Ваш автомобиль:</td>
+<td class="" bgcolor="#f2f2f2">
+<select class=input03 name=car> 
+<option value="">--------------
+<option value=1>ВАЗ 2101</option> 
+<option value=2>ВАЗ 2102</option> 
+<option value=3>ВАЗ 2103</option> 
+<option value=4>ВАЗ 2104</option> 
+<option value=5>ВАЗ 2105</option> 
+<option value=6>ВАЗ 2106</option> 
+<option value=7>ВАЗ 2107</option> 
+<option value=8>ВАЗ 2108</option> 
+<option value=9>ВАЗ 2109</option> 
+<option value=10>ВАЗ 21099</option> 
+<option value=11>ВАЗ 2110</option> 
+<option value=12>ВАЗ 2112</option>
+<option value=13>Ока</option> 
+<option value=14>Нива</option>
+<option value="">--------------
+<option value=16>Honda</option>
+<option value=17>Infiniti</option>
+<option value=18>Lexus</option>
+<option value=19>Mazda</option>
+<option value=20>Mitsubishi</option>
+<option value=21>Nissan</option>
+<option value=22>Subaru</option>
+<option value=23>Toyota</option>
+<option value="">--------------</option>
+<option value="0">Другой</option>
+</select> 
+</td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Модель автомобиля<br />(заполняется, если указана иномарка либо Ваш автомобиль не входит в список):</td>
+<td class="" bgcolor="#f2f2f2"><input type="text" class="input03" name="car_type" value="%car_type%"></td></tr>
+<tr bgcolor="#f2f2f2">
+<td class="" align=right width=160>Подписаться на e-mail рассылку предложений по распродаже:</td>
+<td class=""><input type=checkbox %subscribe% value=1 name=subscribe></td></tr></tbody></table>
+<br /><input type="image" src="http://www.carumba.ru/images/reg.gif" /></form>
+</div></form>

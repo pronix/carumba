@@ -1,0 +1,18 @@
+RewriteEngine on
+Options +FollowSymlinks
+RewriteBase /
+RewriteRule ^stat/$ stat/index.php [L] 
+RewriteRule ^([-A-Za-z0-9]+)/$ index.php?idpage=$1 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/$ index.php?idpage=catalog&idcatalog=$1 [L]
+RewriteRule ^search/([0-9]+)/pages/([0-9]+)/cart/(.*)/$ index.php?idpage=search&idpages=$1&incart=$2&searchtext=$3 [L]
+RewriteRule ^search/([0-9]+)/pages/(.*)/$ index.php?idpage=search&idpages=$1&searchtext=$2 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/product/$ index.php?idpage=catalog&idcatalog=$1&idproduct=$2 [L] 
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/product/([0-9]+)/cart/$ index.php?idpage=catalog&idcatalog=$1&idproduct=$2&incart=$3 [L] 
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/pages/$ index.php?idpage=catalog&idcatalog=$1&idpages=$2 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/pages/([0-9]+)/cart/$ index.php?idpage=catalog&idcatalog=$1&idpages=$2&incart=$3 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/group/([0-9]+)/product/$ index.php?idpage=catalog&idcatalog=$1&idgroup=$2&idproduct=$3 [L] 
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/group/([0-9]+)/product/([0-9]+)/cart/$$ index.php?idpage=catalog&idcatalog=$1&idgroup=$2&idproduct=$3&incart=$4 [L] 
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/group/([0-9]+)/pages/$ index.php?idpage=catalog&idcatalog=$1&idgroup=$2&idpages=$3 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/group/([0-9]+)/pages/([0-9]+)/cart/$ index.php?idpage=catalog&idcatalog=$1&idgroup=$2&idpages=$3&incart=$4 [L]
+RewriteRule ^catalog/([-A-Za-z0-9]+)/([0-9]+)/group/$ index.php?idpage=catalog&idcatalog=$1&idgroup=$2 [L]
+RewriteRule ^[-A-Za-z0-9/]+$ index.php [L]

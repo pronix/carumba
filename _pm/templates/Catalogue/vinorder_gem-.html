@@ -1,0 +1,156 @@
+<form action="" method="post">
+<div class="podbor"><input class="input03" type="hidden" name="action" value="doVIN" />
+				 <table  style="width:100%;   padding:10px 10px 10px 10px;" cellspacing="0">
+                                <tr valign="top"> 
+                                  <td style="width:40%; "><p><strong>Марка Вашего автомобиля:</strong></p>
+                                    <table  style="width:100%;" cellpadding="10" cellspacing="0">
+                                      <tr align="center"> 
+                                        <td> <img src="/products/bmw.gif" alt="BMW" width="70" height="70" /><br />
+                                          BMW<br /> <input type="radio" name="brand" value="BMW" checked="checked" /> 
+                                        </td>
+                                        <td> <img src="/products/mercedes.gif" alt="Mercedes" width="70" height="70" /><br />
+                                          Mercedes<br /> <input type="radio" name="brand" value="Mercedes" /> 
+                                        </td>
+                                      </tr>
+                                      <tr align="center"> 
+                                        <td> <img src="/products/audi.gif" alt="Audi" width="70" height="70" /><br />
+                                          Audi<br /> <input type="radio" name="brand" value="Audi" /> 
+                                        </td>
+                                        <td> <img src="/products/vw.gif" alt="Volkswagen" width="70" height="70" /><br />
+                                          Volkswagen<br /> <input type="radio" name="brand" value="Volkswagen" /> 
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    
+                                  </td>
+                                  <td style="width:50%; "><p><strong>Подбор по 
+            VIN:</strong></p>
+          <table border="0" cellspacing="0" cellpadding="0" class="reg">
+            <tr> 
+              <td class="leftup">Модель:</td>
+              <td class="rightup"><input name="model" type="text" class="input03" /></td>
+            </tr>
+            <tr> 
+              <td class="leftmid">Руль:</td>
+              <td class="rightmid"><select name="wheel" class="input03">
+                  <option>Левый</option>
+                  <option>Правый</option>
+                </select></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Год выпуска:</td>
+              <td class="rightmid"><select name="year" class="input03">
+                  <option value="">Выбрать</option>
+                  <option>2006</option>
+                  <option>2005</option>
+                  <option>2004</option>
+                  <option>2003</option>
+                  <option>2002</option>
+                  <option>2001</option>
+                  <option>2000</option>
+                  <option>1999</option>
+                  <option>1998</option>
+                  <option>1997</option>
+                  <option>1996</option>
+                  <option>1995</option>
+                  <option>1994</option>
+                  <option>1993</option>
+                  <option>1992</option>
+                  <option>1991</option>
+                  <option>1990</option>
+                </select></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">VIN (17):</td>
+              <td class="rightmid"><input name="VIN" type="text" class="input03" /></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Объем и тип двигателя:</td>
+              <td class="rightmid"><input name="engine" type="text" class="input03" /></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Тип кузова:</td>
+              <td class="rightmid"><select name="kuzov" class="input03">
+                  <option value="">Выбрать</option>
+                  <option>Седан</option>
+                  <option>Хэтчбэк</option>
+                  <option>Универсал</option>
+                  <option>Джип</option>
+                  <option>Купе</option>
+                  <option>Кабриолет</option>
+                  <option>Минивэн</option>
+                  <option>Микроавтобус</option>
+                </select></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Тип КПП:</td>
+              <td class="rightmid"><select name="kpp" class="input03">
+                  <option value="">Выбрать</option>
+                  <option>Механическая</option>
+                  <option>Автомат</option>
+                  <option>Вариатор</option>
+                </select></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Привод:</td>
+              <td class="rightmid"><select name="privod" class="input03">
+                  <option value="">Выбрать</option>
+                  <option>Передний</option>
+                  <option>Задний</option>
+                  <option>Полный</option>
+                </select></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">ABS:</td>
+              <td class="rightmid"><input type="checkbox" name="abs" value="1" /></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Кондиционер:</td>
+              <td class="rightmid"> <input type="checkbox" name="condition" value="1" /></td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Тип запчастей:</td>
+              <td class="rightmid"> <input type="checkbox" name="original" value="1" />
+                - оригинальные запчасти<br /> <input type="checkbox" name="nonoriginal" value="1" />
+                - неоригинальные запчасти</td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Запчасть №1:</td>
+              <td class="rightmid"> Наименование:<br /> <textarea name="accName_1" class="input07"></textarea> 
+                <br />
+                Код детали (желательно):<br /> <input name="accID_1" type="text" class="input08" /> 
+              </td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftmid">Запчасть №2:</td>
+              <td class="rightmid"> Наименование:<br /> <textarea name="accName_2" class="input07"></textarea> 
+                <br />
+                Код детали (желательно):<br /> <input name="accID_2" type="text" class="input08" /> 
+              </td>
+            </tr>
+            <tr class="both"> 
+              <td class="leftdwn">Запчасть №3:</td>
+              <td class="rightdwn"> Наименование:<br /> <textarea name="accName_3" class="input07"></textarea> 
+                <br />
+                Код детали (желательно):<br /> <input name="accID_3" type="text" class="input08" /> 
+              </td>
+            </tr>
+          </table>                                    
+                              <br />%send%
+
+                            </td>
+                          </tr>
+                        </table></div>
+						</form>
+						<div class="blokinfo"> 
+  <p><strong>Теперь подобрать запчасти на японский автомобиль стало очень просто:</strong></p>
+<ul>
+  <li> Зарегистрируйтесь в нашем интернет-магазине</li>
+  <li>Выберете марку автомобиля</li>
+  <li>Заполните анкету максимально точно</li>
+  <li>Нажмите кнопку "запрос"</li>
+</ul>
+        <br>
+        <br>
+
+</div>

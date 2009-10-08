@@ -1,0 +1,9 @@
+<container>
+<table style="border: double #F0F000; background-color: #FBFDB5;"><tr><td><strong>&raquo;</strong></td><td> %items% </td><td><strong>&laquo;</strong></td></tr></table>
+</container>
+
+<separator> | </separator>
+
+<activeitem><strong><span class="admmenu">%text%</span></strong></activeitem>
+
+<item><a href="%link%" class="admmenu">%text%</a></item>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rss version="2.0">
+<channel>
+<copyright>(C) 2006 Carumba Âñå ïðàâà çàùèùåíû</copyright>
+<pubDate>Mon, 03 Jul 2006 00:44:33 GMT</pubDate>
+<lastBuildDate>Mon, 03 Jul 2006 00:44:33 GMT</lastBuildDate>
+<description>Ðàñïðîäàæà òîâàðîâ
+</description>
+<link>http://localhost</link>
+<title>Sale</title>
+<managingEditor>info@carumba.ru</managingEditor>
+<webMaster>exception@mail.ru</webMaster>
+<language>en : </language>
+<item><title>Òîâàð</title><link>http://localhost/stranica.html</link><pubDate>Sun, 02 Jul 2006 23:43:10 GMT</pubDate><author>exception@mail.ru</author><category>Ðàñïðîäàæà</category><comments></comments><description> &lt;tr&gt; 
+    &lt;td class="td%style%left"&gt; &lt;div class="inside"&gt; 
+        &lt;div class="ditem"&gt; 
+          &lt;div class="thumb" onClick="document.location.href = '%link%'"&gt; &lt;a href="%link%"&gt;%picture%&lt;/a&gt; 
+          &lt;/div&gt;
+          &lt;div class="descr"&gt; 
+            &lt;div class="in"&gt; &lt;a href="%link%"&gt;&lt;strong&gt;%title%&lt;/strong&gt;&lt;/a&gt;&lt;br /&gt;
+                                      &lt;strong&gt;Ia?ea:&lt;/strong&gt; %car_compatibility%&lt;br/&gt;
+                                      &lt;strong&gt;I?iecaiaeoaeu:&lt;/strong&gt; %producer%
+									  %bonus%
+              &lt;div class="price"&gt; 
+                &lt;div class="numb"&gt;%price%&lt;/div&gt;
+
+                &lt;div class="buy"&gt; 
+                  &lt;div class="in"&gt;&lt;form action=/ method=post style="margin: 0;"&gt;&lt;input type="image" src="/images/buy.gif" alt="Eoieou" /&gt;&lt;input type=hidden name=module value=Cart&gt;&lt;input type=hidden name=function value=tocart&gt;&lt;input type=hidden name=goodID value="%goodID%"&gt;&lt;/form&gt;&lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;&lt;/td&gt;
+  &lt;/tr&gt;</description></item>
+
+</channel>
+</rss>

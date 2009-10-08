@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Перечень заказа по VIN пользователя %userID%</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link href="/css/orders.css" rel="stylesheet" type="text/css">
+<script language="javascript">
+
+function openPopupWindow (formURL, width, height)
+{
+  var Left = (screen.width - width) / 2;
+  var Top = (screen.height - height) / 2;
+  window.open(formURL,"","toolbar=0, scrollbars=yes,location=0,status=0,menubar=0,width="+width+",height="+height+",border=1,resizable=yes,left="+Left+",top="+Top);  
+};
+
+
+</script>
+
+</head>
+
+<body bgcolor="#F6F6F7">
+<form name="addPart" action="/carorders?cmd=vinorders" method="post">
+<input type="hidden" name="act" value="addPart">
+<input type="hidden" name="orderID" value="%orderID%">
+<table width="500" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tblup">
+  <tr> 
+    <td width="202"><img src="images/carumba.gif" width="202" height="44"></td>
+    <td align="right"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="right">Номер заказа:</td>
+          <td width="50">%orderID%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br>
+<table width="500" border="0" cellpadding="5" cellspacing="1" bgcolor="C6C6C6">
+  <tr valign="top" bgcolor="#FFFFFF"> 
+    <td width="25%" align="right">Ваш автомобиль:</td>
+    <td width="25%">%carName%</td>
+    <td width="25%" align="right">Тип кузова:</td>
+    <td width="25%">%cuzov%</td>
+  </tr>
+  <tr valign="top" bgcolor="#F6F6F6"> 
+    <td width="150" align="right">Модель:</td>
+    <td>%carModel%</td>
+    <td align="right">Тип КПП:</td>
+    <td>%kpp%</td>
+  </tr>
+  <tr valign="top" bgcolor="#FFFFFF"> 
+    <td align="right">Руль:</td>
+    <td>%rul%</td>
+    <td align="right">Привод:</td>
+    <td>%privod%</td>
+  </tr>
+  <tr valign="top" bgcolor="#F6F6F6"> 
+    <td align="right">Год выпуска:</td>
+    <td>%year%</td>
+    <td align="right">АBS:</td>
+    <td>%abs%</td>
+  </tr>
+  <tr valign="top" bgcolor="#FFFFFF"> 
+    <td align="right">VIN (17 зн):</td>
+    <td bgcolor="#FFFFFF">%vin%</td>
+    <td align="right">Кондиционер:</td>
+    <td>%condition%</td>
+  </tr>
+  <tr valign="top" bgcolor="#F6F6F6"> 
+    <td align="right">Объем и тип двигателя:</td>
+    <td>%vengine%</td>
+    <td align="right" bgcolor="#FFFFFF">Прозводитель:</td>
+    <td bgcolor="#FFFFFF">%original% Оригинальные <br>
+      %other% Не оригинальные</td>
+  </tr>
+</table>
+<br>
+<table width="500" border="0" cellpadding="5" cellspacing="1" bgcolor="C6C6C6">
+  <tr bgcolor="#DBDBDB"> 
+    <td>Наименование интересующих запчастей:</td>
+  </tr>
+  <tr bgcolor="#F6F6F6"> 
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top"><p>Запчасть №1<br>
+              <textarea name="accName_1" class="widesel2">%accName_1%</textarea>
+            </p>
+            </td>
+          <td width="150" valign="top"><p>Код:<br>
+              <input name="accID_1" type="text" class="input03" value="%accID_1%">
+              <br>
+              <br>
+              Цена закупки детали:<br>
+              <input type="text" name="accBuyPrice_1" value="%accBuyPrice_1%" class="input03">
+              <br>
+              <br>
+              Цена продажи детали:<br>
+              <input type="text" name="accSalePrice_1" value="%accSalePrice_1%" class="input03">
+              <br>
+              <br>
+              Дата поставки (Д-М-Г):<br>
+              <input type="text" name="day_1" value="%day_1%" class="inputdata01">
+              - 
+              <input type="text" name="month_1" value="%month_1%" class="inputdata01">
+              - 
+              <input type="text" name="year_1" value="%year_1%" class="inputdata02">
+            </p>
+            </td>
+        </tr>
+      </table>
+      <hr width="100%">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top"><p>Запчасть №2<br>
+              <textarea name="accName_2" class="widesel2">%accName_2%</textarea>
+            </p>
+            </td>
+          <td width="150" valign="top"><p>Код:<br>
+              <input name="accID_2" type="text" class="input03" value="%accID_2%">
+              <br>
+              <br>
+              Цена закупки детали:<br>
+              <input type="text" name="accBuyPrice_2" value="%accBuyPrice_2%" class="input03">
+              <br>
+              <br>
+              Цена продажи детали:<br>
+              <input type="text" name="accSalePrice_2" value="%accSalePrice_2%" class="input03">
+              <br>
+              <br>
+              Дата поставки (Д-М-Г):<br>
+              <input type="text" name="day_2" value="%day_2%" class="inputdata01">
+              - 
+              <input type="text" name="month_2" value="%month_2%" class="inputdata01">
+              - 
+              <input type="text" name="year_2" value="%year_2%" class="inputdata02">
+            </p>
+            </td>
+        </tr>
+      </table>
+      <hr width="100%">
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top"><p>Запчасть №3<br>
+              <textarea name="accName_3" class="widesel2">%accName_3%</textarea>
+            </p>
+            </td>
+          <td width="150" valign="top"><p>Код:<br>
+              <input name="accID_3" type="text" class="input03" value="%accID_3%">
+              <br>
+              <br>
+              Цена закупки детали:<br>
+              <input type="text" name="accBuyPrice_3" value="%accBuyPrice_3%" class="input03">
+              <br>
+              <br>
+              Цена продажи детали:<br>
+              <input type="text" name="accSalePrice_3" value="%accSalePrice_3%" class="input03">
+              <br>
+              <br>
+              Дата поставки (Д-М-Г):<br>
+              <input type="text" name="day_3" value="%day_3%" class="inputdata01">
+              - 
+              <input type="text" name="month_3" value="%month_3%" class="inputdata01">
+              - 
+              <input type="text" name="year_3" value="%year_3%" class="inputdata02">
+            </p>
+            </td>
+        </tr>
+      </table>
+      <hr width="100%">
+      <a style="cursor: pointer" onClick="addPart.submit(); return false;">Обновить</a> - <a href="#"></a><a href="#">Распечатать</a> - 
+      <a style="cursor: pointer" onClick=" return false;">Отправить ответ</a></td>
+  </tr>
+</table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<form id="filterForm" action="" method="get">			
+<div class="podbor">
+
+<table  cellspacing="0" cellpadding="0" class="both">
+  <tr>
+    <td class="left5">
+	<p><strong>Результат подбора %filter_result%:</strong></p>
+	%catFilter%
+	
+	</td>
+    <td class="right5">
+	<p><strong>Фильтр товаров:</strong></p>
+<table cellpadding="0" cellspacing="0" class="items-table">
+  <tr>
+    <td class="tdupleft filtr">Цена:</td>
+    <td class="tdupright filtr">
+от <input name="from" type="text" class="input02" value="%from%" />
+до <input name="to" type="text" class="input02" value="%to%" /> руб.
+	</td>
+  </tr>
+  %propsValues%
+</table>
+
+<br /><input type="image" src="/images/filtr.gif" class="filtr_butt" alt="Фильтровать" onclick="filterForm.submit(); return false;"  /> <input type="image" src="/images/filtr_clr.gif" class="filtr_clr_butt" alt="Сбросить фильтр" onclick="setNullFilter(); return false;" />
+	</td>
+  </tr>
+</table>
+
+<table  cellspacing="0" cellpadding="0" class="both">
+  <tr>
+                <td class="leftpage">%links%
+                </td>
+  </tr>
+
+</table>
+</div>
+</form>
+
+				
+				

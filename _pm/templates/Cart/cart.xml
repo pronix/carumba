@@ -1,0 +1,195 @@
+<container>
+    %cart%
+                        <br/> <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                          <tr valign="top"> 
+                            <td width="44"><img src="/images/info.gif" width="44" height="44" hspace="5" vspace="5" align="left"/></td>
+                            <td><p>Интернет-магазин <strong>&quot;Карумба&quot;</strong> 
+                                представляет большой ассортимент авто-запчастей, 
+                                <strong>минимальная покупка 1500 руб.</strong> 
+                                (стоимость доставки по Санкт-Петербургу 200 руб.). 
+                                Если сумма покупки превышает 3000 руб., стоимость 
+                                доставки уменьшается до 100 руб. <strong>Члены 
+                                клуба за доставку не платят.</strong></p></td>
+                          </tr>
+                        </table>
+    %order%
+</container>
+
+
+<cart>
+
+<table style="width:100%;margin:0 0 20px;" cellspacing="0" cellpadding="0">
+	<tr>
+		<td style="width:120px;">
+		<div style="padding:20px 0 0 20px;">11
+<!-- <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" data="/images/carumbych.swf" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="65" height="90">
+ <param name="movie" value="/images/carumbych111.swf"/>
+ <param name="quality" value="high"/>
+</object>--><img src="/images/minime.gif" alt="" width="100" height="135" border="0" />
+</div>
+		</td>
+		<td style="vertical-align:middle;width:195px;">
+		<div style="padding:10px;">
+<a href="/club/club"><img src="/images/club.gif" alt="Автоклуб КАРУМБА (скидки, бонусы)" width="175" height="98" border="0" align="absmiddle"/></a>
+		</div>
+		</td>
+		<td>
+		%club%
+		</td>
+	</tr>
+</table>
+                        <form action="/" method="post">
+						<div>
+                        <input type="hidden" name="module" value="Cart" />
+                        <input type="hidden" name="cmd" value="recalc" />
+                        <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#DCDDE0">
+                          <tr bgcolor="#FFFFFF"> 
+                            <td width="50%"><strong>Наименование</strong></td>
+                            %priceth%
+                            <td><strong>Цена, руб.</strong></td>
+                            <td align="center"><strong>Кол-во</strong></td>
+                            <td width="75" align="center"><strong>Удалить</strong></td>
+                          </tr>
+                          %goods%
+                          <tr bgcolor="#F8F8F8"> 
+                            <td bgcolor="#F2F2F2"><strong>Сумма:</strong></td>%amount%<td align="center" bgcolor="#F2F2F2">%total%</td>
+                            <td bgcolor="#F2F2F2"><input type="image" src="/images/recalc.gif" /></td>
+                          </tr>
+                        </table>
+						</div>
+                        </form>
+</cart>
+
+<emptycart>
+                        <br/>
+                        <blockquote>
+                            <big>
+                                <strong>Ваша корзина пуста.</strong>
+                            </big>
+                        </blockquote>
+</emptycart>
+
+
+<goods>
+                          <tr bgcolor="#FFFFFF">%goods_price_cells%<td class="minuz">%price%</td>
+                            <td align="center"><input type="text" class="input02" name="gc%goodID%" value="%good_count%"/></td>
+                            <td align="center"><input type="checkbox" name="del%goodID%" value="%goodID%"/></td>
+                          </tr>
+</goods>
+
+<order>
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="8"><img src="/images/pix.gif" width="8" height="8"/></td>
+                      <td valign="top"><br/><p><strong>Оформленмие заказа:</strong></p>
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F2F2F2">
+                          <tr> 
+                            <td width="10" height="10"><img src="/images/t_01.gif" width="10" height="10"/></td>
+                            <td height="10" background="/images/tb_01.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                            <td width="19" height="10"><img src="/images/t_05.gif" width="19" height="10"/></td>
+                            <td height="10" background="/images/tb_01.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                            <td width="10" height="10"><img src="/images/t_02.gif" width="10" height="10"/></td>
+                          </tr>
+                          <tr> 
+                            <td width="10" background="/images/tb_02.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                            <td valign="top">%left%</td>
+                            <td width="19" background="/images/tb_03.gif"><img src="/images/pix.gif" width="19" height="10"/></td>
+                            <td valign="top">%right%</td>
+                            <td width="10" background="/images/tb_03.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                          </tr>
+                          <tr> 
+                            <td width="10" height="10"><img src="/images/t_03.gif" width="10" height="10"/></td>
+                            <td height="10" background="/images/tb_04.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                            <td width="19" height="10"><img src="/images/t_06.gif" width="19" height="10"/></td>
+                            <td height="10" background="/images/tb_04.gif"><img src="/images/pix.gif" width="10" height="10"/></td>
+                            <td width="10" height="10"><img src="/images/t_04.gif" width="10" height="10"/></td>
+                          </tr>
+                        </table></td>
+                      <td width="8"><img src="/images/pix.gif" width="8" height="8"/></td>
+                    </tr>
+                  </table>
+</order>
+
+<quickorder>
+		              <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                                <tr> 
+                                  <td valign="top"><p><strong>Быстрый заказ</strong>:</p>
+                                    <table width="100%" border="0" cellpadding="5" cellspacing="0">
+                                      <tr> 
+                                        <td width="70" valign="top">Ваше имя*</td>
+                                        <td><input name="textarea2222325" type="text" class="input01"/></td>
+                                      </tr>
+                                      <tr> 
+                                        <td width="70" valign="top">Телефон*</td>
+                                        <td><input name="textarea22223222" type="text" class="input01"/></td>
+                                      </tr>
+                                      <tr> 
+                                        <td width="70" valign="top">Адрес</td>
+                                        <td><input name="textarea22223232" type="text" class="input01"/></td>
+                                      </tr>
+                                      <tr> 
+                                        <td width="70" valign="top">e-mail</td>
+                                        <td><input name="textarea22223242" type="text" class="input01"/></td>
+                                      </tr>
+                                      <tr> 
+                                        <td width="70" valign="top">Комментарий</td>
+                                        <td><textarea name="textarea4" class="input05"></textarea>
+                                          <br/>
+                                          <table width="50" height="15" border="0" cellpadding="0" cellspacing="0">
+                                            <tr> 
+                                              <td width="5" height="15"><img src="/images/go_01.gif" width="5" height="15" border="0"/></td>
+                                              <td height="15" valign="top" bgcolor="#676971"><a href="#" class="whiteb2">купить</a></td>
+                                              <td width="5" height="15"><img src="/images/go_02.gif" width="5" height="15" border="0"/></td>
+                                            </tr>
+                                          </table></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+</quickorder>
+
+<login>
+                              <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                                <tr> 
+                                  <td valign="top"><p><strong>Авторизация</strong>:</p>
+                                    <form action="/" method="POST" name="authform">
+                                    <input type="hidden" name="cmd" value="login"/>
+                                    <input type="hidden" name="redirectURL" value="%currentpath%"/>
+                                    <table width="140" border="0" cellspacing="0" cellpadding="0">
+                                      <tr> 
+                                        <td><input name="login" type="text" class="input01" value="Логин или № карты" 
+                                        onfocus="if (this.value == 'Логин или № карты') {this.value = '';}"
+                                        onblur="if (this.value == '') {this.value = 'Логин или № карты'; }"/></td>
+                                      </tr>
+                                    </table>
+                                    <table width="140" border="0" cellspacing="0" cellpadding="0">
+                                      <tr> 
+                                        <td><input name="psw" type="password" class="input01" value="Пароль"
+                                        onfocus="if (this.value == 'Пароль') {this.value = '';}" 
+                                        onblur="if (this.value == '') {this.value = 'Пароль';}" 
+                                        /></td>
+                                        <td width="23" valign="middle">
+                                        <input type="image" src="/images/ok.gif"/>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    </form>
+                                    <p><a href="/registration" class="levm"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/>Зарегестрироваться</a><br/>
+                                    <a href="/lostpassword" class="levm"><img src="/images/arr_gray2.gif" width="7" height="9" border="0" align="absmiddle"/>Забыли пароль?</a></p>
+                                    </td>
+                                </tr>
+                              </table>
+</login>
+
+<comment>
+                              <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                                <tr> 
+                                  <td valign="top"><p><strong>Комментарий:</strong></p>
+                                    <p> 
+                                      <textarea name="order_comment" rows="5" class="input05"></textarea>
+                                    </p>
+                                    </td>
+                                </tr>
+                              </table>
+</comment>

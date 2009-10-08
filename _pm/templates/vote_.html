@@ -1,0 +1,35 @@
+<form action="/admin?cmd=vote&act=save" method="post">
+<table border="0" width="100%">
+	<tr>
+		<td>id</td>
+		<td>Вопрос</td>
+		<td>Ответы</td>
+		<td>Активность</td>
+		<td>По умолчанию</td>
+		<td>Редактировать</td>
+		<td>Удалить</td>
+	</tr>
+	%votes%
+	<tr>
+		<td><INPUT TYPE="hidden" name="qID" value="%qID%" />%qID</td>
+		<td>
+			<INPUT TYPE="text" NAME="Question" value="%Question%" />
+		</td>
+		<td><p>
+			<INPUT TYPE="text" NAME="Ans1" value="%Ans1%" /><br />
+			<INPUT TYPE="text" NAME="Ans2" value="%Ans2%" /><br />
+			<INPUT TYPE="text" NAME="Ans3" value="%Ans3%" /><br />
+			<INPUT TYPE="text" NAME="Ans4" value="%Ans4%" /><br />
+			<INPUT TYPE="text" NAME="Ans5" value="%Ans5%" /><br />
+			<INPUT TYPE="text" NAME="Ans6" value="%Ans6%" /><br />
+			<INPUT TYPE="text" NAME="Ans7" value="%Ans7%" /><br />
+			<INPUT TYPE="text" NAME="Ans8" value="%Ans8%" /><br />
+			<INPUT TYPE="text" NAME="Ans9" value="%Ans9%" /><br />
+			<INPUT TYPE="text" NAME="Ans10" value="%Ans10%" /></p>
+		</td>
+		<td><INPUT TYPE="checkbox" NAME="isactive" value="1" %isactive% /></td>
+		<td><INPUT TYPE="checkbox" NAME="isdefault" value="1" %isdefault% /></td>
+		<td colspan="2"><INPUT TYPE="submit" /></td>
+	</tr>
+</table>
+</form>

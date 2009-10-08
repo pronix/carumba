@@ -1,0 +1,29 @@
+<div class="blokinf"> 
+
+<table cellspacing="0" cellpadding="0" class="fast">
+  <tr>
+    <td class="left">Ваше имя*</td>
+    <td><input name="name" type="text" class="input01" /></td>
+  </tr>
+  <tr>
+    <td>Телефон*</td>
+    <td><input name="phone" type="text" class="input01" /></td>
+  </tr>
+  <tr>
+    <td>Адрес</td>
+    <td><input name="adress" type="text" class="input01" /></td>
+  </tr>
+  <tr>
+    <td>e-mail</td>
+    <td><input name="email" type="text" class="input01" /></td>
+  </tr>
+  <tr>
+    <td>Комментарий</td>
+    <td><textarea name="comment" class="input05" rows="5" cols="40"></textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="image" src="/images/buy_basket.gif" alt="Отправить заказ" /></td>
+  </tr>
+</table>
+</div>

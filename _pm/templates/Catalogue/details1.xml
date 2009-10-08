@@ -1,0 +1,129 @@
+<container>
+<script language="javascript">
+function openPopupWindow (formURL, width, height)
+{
+  var Left = (screen.width - width) / 2;
+  var Top = (screen.height - height) / 2;
+  window.open(formURL,"","toolbar=0, scrollbars=no,location=0,status=0,menubar=0,width="+width+",height="+height+",border=1,resizable=yes,left="+Left+",top="+Top);  
+};
+
+</script>
+			<div class="podbor">
+				<table cellspacing="0" cellpadding="0" class="both">
+					<tr>
+%picture%
+%description%
+  					</tr>
+				</table>
+			</div>
+</container>
+
+<picture>
+    					<td class="leftpodr">
+    			 <table class="podpic" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <td class="pod_01"><img src="/images/pix.gif" width="15" height="15"  alt="" /></td>
+                      <td class="pod_02">&nbsp;</td>
+                      <td class="pod_03"><img src="/images/pix.gif" width="15" height="15"  alt="" /></td>
+                    </tr>
+                    <tr> 
+                      <td class="pod_04">&nbsp;</td>
+                      <td class="pic">%aopen%<img src="%image%" width="200" height="200"  alt="%good_name%" />%aclose%</td>
+                      <td class="pod_05">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td class="pod_06">&nbsp;</td>
+                      <td class="pod_07">&nbsp;</td>
+                      <td class="pod_08">&nbsp;</td>
+                    </tr>
+	           </table><br />
+	           %rating%
+               %zoom%
+               %print%
+               %producer%
+               %ref%
+						</td>
+</picture>
+
+<zoom>
+<div class="separate">
+<img src="/images/zoom.gif" width="25" height="19"  alt="" class="zoom_butt" /> - <a style="cursor: pointer" class="buttonlink" onClick="openPopupWindow('%link%', 450, 450); return false;">Увеличить изображение</a>
+</div>
+</zoom>                                                                                                                                                            
+
+<print>
+<div class="separate">
+<img src="/images/print.gif" width="25" height="19"  alt="" class="zoom_butt" /> - <a style="cursor: pointer" class="buttonlink" target="_blanc" %link%>Версия для печати</a>
+</div>
+</print>
+
+<producer>
+<div class="separate">
+<img src="/images/moredetail.gif" width="25" height="19"  alt="" class="zoom_butt" /> - <a style="cursor: pointer" class="buttonlink" %link%>Подробнее о производителе</a>
+</div>
+</producer>
+
+<ref>
+<div class="separate">
+<img src="/images/mail.gif" width="25" height="19"  alt="" class="zoom_butt" /> - <a style="cursor: pointer" class="buttonlink" onClick="openPopupWindow('%link%', 337, 279); return false;">Отправить ссылку другу</a>
+</div>
+</ref>
+
+<description>
+    					<td class="rightpodr">
+<table cellpadding="0" cellspacing="0" class="items-table">
+                                    %spec%
+</table>
+              <div class="price">
+                <div class="numb"> %price% руб. </div>
+					<div class="buy"> 
+						<div class="in">
+							<form action="/" method="post" style="margin:0px;">
+								<input type="image" src="/images/buy.gif"/>
+								<input type="hidden" name="module" value="Cart"/>
+								<input type="hidden" name="function" value="tocart"/>
+								<input type="hidden" name="goodID" value="%goodID%"/>
+							</form>
+						</div>
+					</div>
+				</div>
+			  </div>
+                                    %details%
+					    </td>
+</description>
+
+<spec>
+  <tr>
+    <td class="td%style%left filtr"><strong>%spec_name%</strong></td>
+    <td class="td%style%right filtr">%spec_value%</td>
+  </tr>
+</spec>
+
+<details>                                    
+<!--
+    Подробнее / комментарии
+-->
+<input id="sID" value="{id}" type="hidden" />
+<input id="detalsNone" value="{detals_none}" type="hidden" />
+<div class="detal_header">
+    <div class="left"><img id="imgDetalsLeft" src="/images/detals_active_left.gif" border="0" /></div>
+    <div class="left" id="detalsCont" style="background-color:#FFFFFF;">
+        <div class="detals" id="detalsOut"><span class="span_b" id="detals">Подробнее</span></div>
+    </div>
+    <div class="left" style="margin-right:5px;"><img id="imgDetalsRight" src="/images/detals_active_right.gif" border="0" /></div>
+
+    <div class="left"><img id="imgCommentLeft" src="/images/detals_left.gif" border="0" /></div>
+    <div class="left" id="commentCont" style="background-color:#F0F0F1;">
+        <div class="comments" id="commentOut"><span class="span_a" id="comment">Комментарии ({com_count})</span></div>
+    </div>
+    <div class="left"><img id="imgCommentRight" src="/images/detals_right.gif" border="0" /></div>
+    {new_det}</div>
+
+<div class="detal_cont">
+<div id="infoDetals">
+{content}
+</div>
+<div id="infoComments" style="display:none;">
+{com_content}
+</div>
+</div></details>

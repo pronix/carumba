@@ -1,0 +1,1 @@
+SELECT URLName, count(sID) FROM `pm_structure` where ModuleName='Catalogue' group by URLName having count(sID) > 1

@@ -1,0 +1,60 @@
+<form action="/admin?cmd=mails&act=send" method="post">
+<table border="0" width="100%">
+<tr>
+	<td align="left">
+		<b>Тема:</b>
+	</td>
+	<td align="left">
+		<INPUT TYPE="text" NAME="subject" size="40" />
+	</td>
+</tr>
+<tr>
+	<td width="20%" align="left">
+		<b>Сообщение:</b>
+	</td>
+	<td align="left">
+		<TEXTAREA NAME="body" ROWS="7" COLS="40"></TEXTAREA>
+	</td>
+</tr>
+<tr>
+	<td align="left">
+		<b>Отправить зарегестрированным пользователям</b>
+	</td>
+	<td align="left">
+		<INPUT TYPE="checkbox" NAME="reged" value="reged" checked />
+	</td>
+</tr>
+<tr>
+	<td align="left">
+		<b>Отправить клубным пользователям</b>
+	</td>
+	<td align="left">
+		<INPUT TYPE="checkbox" NAME="club" value="1" />
+	</td>
+</tr>
+<tr>
+	<td align="left">
+		<b>Отправить распродажи</b>
+	</td>
+	<td align="left">
+		<INPUT TYPE="checkbox" NAME="sales" />
+	</td>
+</tr>
+<tr>
+	<td align="left">
+		<b>Отправить спецпредложения</b>
+	</td>
+	<td align="left">
+		<INPUT TYPE="checkbox" NAME="bonus" />
+	</td>
+</tr>
+<tr>
+	<td align="left">
+		<INPUT TYPE="submit" name="send" value="Отправить" />
+	</td>
+	<td align="left">
+		&nbsp;
+	</td>
+</tr>
+</table>
+</form>

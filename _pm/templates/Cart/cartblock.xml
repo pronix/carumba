@@ -1,0 +1,34 @@
+<container>
+<div class="basket_up"><a href="/carumba/cart"> <img src="/images/right_basket.gif" width="175" height="53"  alt="Ваша корзина" /></a></div>
+		  	<div class="basket" style="width:155px;">
+							%goodsnumber%
+							%goods%
+                            %price%
+                            %cardprice%
+		  	</div>
+            %orderlink%
+</container>
+
+<orderlink>
+		  	<div class="basket_down"><a href="/carumba/cart"><img src="/images/right_order.gif" width="175" height="23"  alt="Оформить заказ" /></a></div><br />
+</orderlink>
+
+<goodsnumber>
+		  	<img src="/images/arr_wgray.gif" width="7" height="9"  alt="" />Товаров в корзине: %number%<br />
+</goodsnumber>
+
+
+<price>
+		  	<br /><img src="/images/arr_wgray.gif" width="7" height="9"  alt="" />Сумма: %sum% руб.<br />
+</price>
+
+<cardprice>
+		 	 <img src="/images/arr_wgray.gif" width="7" height="9"  alt="" />По карте: %cardsum% руб.
+</cardprice>
+
+<goods>
+		 	 %goods_row%
+</goods>
+
+                                
+                                

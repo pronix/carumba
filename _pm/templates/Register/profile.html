@@ -1,0 +1,177 @@
+<div class="blokinfo">
+<p><strong>Внимание:</strong></p>
+<ul>
+    <li>После отправки анкеты, на Ваш e-mail будет отослано письмо</li>
+<li>Указанная вами марка автомобиля поможет улучшить качество получаемой Вами информации о распродаже</li>
+<li>Все поля данной анкеты обязательны для заполнения </li></ul><br /><br /><br />
+</div>
+%MSG% 
+<div class="podbor">
+<form onsubmit="return checkReg();" method="post" id="regForm"><input type=hidden value=doUpdate name=action>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="reg">
+  <tr>
+      <td class="leftup">Логин:</td>
+      <td class="rightup"><input class="input03" class="input03" value="%login%" name="login" /></td>
+  </tr>
+  <tr>
+      <td class="leftmid">Пароль:</td>
+      <td class="rightmid"><input class="input03" class="input03" type="password" value="%psw%" name="psw" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Пароль повторно:</td>
+      <td class="rightmid"><input class="input03" class="input03" type="password" value="%psw2%" name="psw2" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">E-mail:</td>
+      <td class="rightmid"><input class="input03" class="input03" value="%email%" name="email" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Фамилия:</td>
+      <td class="rightmid"><input class="input03" class="input03" value="%lastname%" name="lastname" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Имя:</td>
+      <td class="rightmid"><input class="input03" class="input03" value="%firstname%" name="firstname" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Отчество:</td>
+      <td class="rightmid"><input class="input03" class="input03" value="%surname%" name="surname" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Ваш пол:</td>
+      <td class="rightmid"><input type="radio" checked="checked" value="male" name="sex" /> Мужской <input type="radio" value="female" name="sex" /> Женский </td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Контактный телефон:</td>
+      <td class="rightmid"><input class="input03" class="input03" value="%phone%" name="phone" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Страна:</td>
+      <td class="rightmid"><select class="input03" class="input03" name="region"> <option value=Россия selected="selected">Россия</option></select></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Город:</td>
+      <td class="rightmid"><select class="input03" class="input03" name="city"> 
+	  <option value="Санкт-Петербург" selected="selected">Санкт-Петербург</option>
+	   <option value="Москва" >Москва</option>
+ <option value="Абакан" >Абакан </option>
+ <option value="Архангельск" >Архангельск </option>
+ <option value="Астрахань" >Астрахань </option>
+ <option value="Балаково" >Балаково </option>
+ <option value="Барнаул" >Барнаул </option>
+ <option value="Белгород" >Белгород </option>
+ <option value="Благовещенск" >Благовещенск </option>
+ <option value="Владивосток" >Владивосток </option>
+ <option value="Волгоград" >Волгоград </option>
+ <option value="Вологда" >Вологда </option>
+ <option value="Воронеж" >Воронеж </option>
+ <option value="Екатеринбург" >Екатеринбург </option>
+ <option value="Ижевск" >Ижевск </option>
+ <option value="Иркутск" >Иркутск </option>
+ <option value="Казань" >Казань </option>
+ <option value="Кемерово" >Кемерово </option>
+ <option value="Киров" >Киров </option>
+ <option value="Краснодар" >Краснодар </option>
+ <option value="Красноярск" >Красноярск </option>
+ <option value="Курган" >Курган </option>
+ <option value="Курск" >Курск </option>
+ <option value="Липецк" >Липецк </option>
+ <option value="Магнитогорск" >Магнитогорск </option>
+ <option value="Мурманск" >Мурманск </option>
+ <option value="Набережные Челны" >Набережные 
+Челны </option>
+ <option value="Нижневартовск" >Нижневартовск </option>
+ <option value="Нижний Новгород" >Нижний 
+Новгород </option>
+ <option value="Нижний Тагил" >Нижний Тагил </option>
+ <option value="Новокузнецк" >Новокузнецк </option>
+ <option value="Новороссийск" >Новороссийск </option>
+ <option value="Новосибирск" >Новосибирск </option>
+ <option value="Омск" >Омск </option>
+ <option value="Оренбург" >Оренбург </option>
+ <option value="Пенза" >Пенза </option>
+ <option value="Пермь" >Пермь </option>
+ <option value="Петрозаводск" >Петрозаводск </option>
+ <option value="Пятигорск" >Пятигорск </option>
+ <option value="Ростов-на-Дону" >Ростов-на-Дону </option>
+ <option value="Самара" >Самара </option>
+ <option value="Саранск" >Саранск </option>
+ <option value="Саратов" >Саратов </option>
+ <option value="Сочи" >Сочи </option>
+ <option value="Ставрополь" >Ставрополь </option>
+ <option value="Стерлитамак" >Стерлитамак </option>
+ <option value="Сургут" >Сургут </option>
+ <option value="Сыктывкар" >Сыктывкар </option>
+ <option value="Тольятти" >Тольятти </option>
+ <option value="Томск" >Томск </option>
+ <option value="Тюмень" >Тюмень </option>
+ <option value="Улан-Удэ" >Улан-Удэ </option>
+ <option value="Ульяновск" >Ульяновск </option>
+ <option value="Уфа" >Уфа </option>
+ <option value="Хабаровск" >Хабаровск </option>
+ <option value="Чебоксары" >Чебоксары </option>
+ <option value="Челябинск" >Челябинск </option>
+ <option value="Череповец" >Череповец </option>
+ <option value="Якутск" >Якутск </option>
+ <option value="Ярославль" >Ярославль</option>
+	  </select></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Адрес доставки:</td>
+      <td class="rightmid"><textarea class="input05" name="address">%address%</textarea></td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Ваш автомобиль:</td>
+      <td class="rightmid">
+<select class="input03" name="carID"> 
+<option value="">--------------</option>
+<option value="1" %sel_1%>ВАЗ 2101</option> 
+<option value="2" %sel_2%>ВАЗ 2102</option> 
+<option value="3" %sel_3%>ВАЗ 2103</option> 
+<option value="4" %sel_4%>ВАЗ 2104</option> 
+<option value="5" %sel_5%>ВАЗ 2105</option> 
+<option value="6" %sel_6%>ВАЗ 2106</option> 
+<option value="7" %sel_7%>ВАЗ 2107</option> 
+<option value="8" %sel_8%>ВАЗ 2108</option> 
+<option value="9" %sel_9%>ВАЗ 2109</option> 
+<option value="10" %sel_10%>ВАЗ 21099</option> 
+<option value="11" %sel_11%>ВАЗ 2110</option> 
+<option value="12" %sel_12%>ВАЗ 2112</option>
+<option value="13" %sel_13%>Ока</option> 
+<option value="14" %sel_14%>Нива</option>
+<option value="">--------------</option>
+<option value="16" %sel_16%>Honda</option>
+<option value="17" %sel_17%>Infiniti</option>
+<option value="18" %sel_18%>Lexus</option>
+<option value="19" %sel_19%>Mazda</option>
+<option value="20" %sel_20%>Mitsubishi</option>
+<option value="21" %sel_21%>Nissan</option>
+<option value="22" %sel_22%>Subaru</option>
+<option value="23" %sel_23%>Toyota</option>
+<option value="">--------------</option>
+<option value="0" %sel_0%>Другой</option>
+</select> 
+	  </td>
+  </tr>
+  <tr class="both">
+      <td class="leftmid">Модель автомобиля<br />(заполняется, если указана иномарка либо Ваш автомобиль не входит в список):</td>
+      <td class="rightmid"><input class="input03" type="text" name="carType" value="%carType%" /></td>
+  </tr>
+  <tr class="both">
+      <td class="leftdwn">Подписаться на e-mail рассылку предложений по распродаже:</td>
+      <td class="rightdwn"><input type=checkbox checked="checked" value="1" name="subscribe" /></td>
+  </tr>
+</table>
+    <br />
+      <input type="image" src="http://www.carumba.ru/images/change.gif" />
+  </form></div>
+  <script type="text/javascript">
+  var regForm = document.getElementById("regForm");
+  var selectedCityValue = '%city%';
+  for(var i = 0; i < regForm.city.options.length; i++) {
+    if(regForm.city.options[i].value == selectedCityValue) {
+      regForm.city.selectedIndex = i;
+      break;
+    }
+  }
+</script>

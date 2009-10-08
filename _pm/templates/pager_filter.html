@@ -1,0 +1,22 @@
+<form id="orderForm" action="" method="get">
+<div class="podbor">
+%catFilter%
+<table  cellspacing="0" cellpadding="0" class="both">
+  <tr>
+    <td class="leftpage">
+—траницы: %links%
+	</td>
+    <td class="rightpage">
+&nbsp;<select name="order" id="select" onchange="var orderForm = document.getElementById('orderForm');orderForm.submit(); return false;">
+			<option value="">—ортировать по...</option>
+			<option value="name" %sel1%>наименованию</option>
+			<option value="price" %sel2%>цене по возрастанию</option>
+			<option value="pricedesc" %sel3%>цене по убыванию</option>
+			<option value="rating" %sel4%>рейтингу</option>
+			</select>
+	</td>
+  </tr>
+</table>
+
+			</div>
+</form>

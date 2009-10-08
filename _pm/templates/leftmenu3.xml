@@ -1,0 +1,18 @@
+<type>VerticalTree</type>
+
+<menu level="1">
+	<item active="1">
+			<li class="menu_%css%_a current"><a href="%link%">%text%</a></li>
+	</item>
+	<item active="0">
+	<li  class="menu_%css%"><a href="%link%">%text%</a></li>
+	</item>
+	<separator></separator>
+	
+	<container>
+		<ul id="menu-left3">
+	%items%
+		</ul>
+	</container>
+
+</menu>

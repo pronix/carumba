@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !(.*js$)
+RewriteRule ^.*$ index.php [L]
+
+AddType image/x-icon .ico

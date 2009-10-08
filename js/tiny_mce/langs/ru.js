@@ -1,0 +1,43 @@
+// Russian translation by Roman Filippov
+// romanf@terrahost.ca
+// www.hunox.ca
+
+tinyMCE.addToLang('',{
+bold_desc : 'Полужирный',
+italic_desc : 'Курсив',
+underline_desc : 'Подчеркивание',
+striketrough_desc : 'Перечеркивание',
+justifyleft_desc : 'Вырвнивание влево',
+justifycenter_desc : 'Вырвнивание по центру',
+justifyright_desc : 'Вырвнивание вправо',
+justifyfull_desc : 'Вырвнивание равномерно',
+bullist_desc : 'Маркированный список',
+numlist_desc : 'Нумерованный список',
+outdent_desc : 'Уменьшить отступ',
+indent_desc : 'Увеличить отступ',
+undo_desc : 'Отменить',
+redo_desc : 'Вернуть',
+link_desc : 'Вставить/изменить ссылку',
+unlink_desc : 'Убрать ссылку',
+image_desc : 'Вставить/изменить изображение',
+cleanup_desc : 'Вычистить грязный код',
+focus_alert : 'Вы должны находится в поле редактора перед использованием данной команды.',
+edit_confirm : 'Хотите ли Вы воспользоваться WYSIWYG редактором для этого поля ввода?',
+insert_link_title : 'Вставить/изменить ссылку',
+insert : 'Вставить',
+update : 'Вставить',
+cancel : 'Отменить',
+insert_link_url : 'Адрес',
+insert_link_target : 'Открыть в...:',
+insert_link_target_same : 'том же окне',
+insert_link_target_blank : 'новом окне',
+insert_image_title : 'Вставить/изменить изображение',
+insert_image_src : 'Адрес',
+insert_image_alt : 'Описание',
+help_desc : 'Помощь',
+bold_img : "bold_ru.gif",
+italic_img : "italic_ru.gif",
+underline_img : "underline_ru.gif",
+clipboard_msg : 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?',
+popup_blocked : 'Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.'
+});

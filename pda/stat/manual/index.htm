@@ -1,0 +1,499 @@
+<HTML>
+<HEAD>
+<TITLE>CNStats 2.5 Manual</TITLE>
+<STYLE type="text/css">
+<!--
+H1 {font-size:11px;font-weight:normal;font-family: verdana,tahoma}
+TABLE {border:1px solid black;border-collapse: collapse;width:250px;}
+TD {padding: 10px;background-color:white;border:1px solid}
+PRE {color:#0000C0;}
+//-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1>CNStats 2.5 Manual</H1>
+
+<H1>Working with Statistics.</H1>
+
+<P>You have to type in administrative password, set during installation, to enter the system. If the password is not correct, you will be returned back to the login form.
+<P>CNStats employs PHP sessions for authorization. If you are not allowed to enter statistics page the reason might be incorrectly typed in password or incorrect work of sessions function.
+<P>Statistics page comprises of three parts:
+
+<OL>
+<LI><B>Left menu</B> - contains list of reports, divided into sections.
+<LI><B>Main window</B> - contents of the report.
+<LI><B>Right menu</B> - contains additional menu, date menu, time periods report, and report generation time.
+</OL>
+
+<P>Additional menu may vary depending on the report displayed in the Main window, some reports may not have any additional menus.
+<P>When you enter the system for the first time, it is strongly recommended to visit "Settings section" and update countries database. You can find information how to do that in description of "Countries" report.  </P>
+
+<HR size=1>
+<H1>Entering the System</H1>
+
+<P>Access to the reports is limited. You must type in your login and password to enter the system. Your login is your E-Mail address, which you can see in config.php file and you set your password while installing the system.
+<P>If you check "Remember me at this workstation" option, you will not be asked for login and password each time you enter the sytem.
+<P><font color=red>Important:</font> check this option only when working with trusted computers.
+<P>These settings may be easily changed in file <I>config.php</I>.
+<P>Registration E-Mail:
+<PRE>
+$STATS_CONF["cnsoftwarelogin"]="your@email.com";
+</PRE>
+<P>Password:
+<PRE>
+$STATS_CONF["adminpassword"]="ac4cb488439ad456f4567b8da5f02";
+</PRE>
+<P>or (less secure):
+<PRE>
+$STATS_CONF["adminpassword"]=md5("youpassword");
+</PRE>
+<P>You may turn authorisation off. It may be necessary, if you use your own authorisation system and CN-Stats is working as part of it:
+<PRE>
+$COUNTER["disablepassword"]="yes";
+</PRE>
+
+<HR size=1>
+<H1>Prior filters</H1>
+
+<P>Prior filters allow ajusting existing reports, examples are below:
+
+<UL>
+<LI>Search systems may be excluded form "Referrers" report.
+<LI>Your web-site pages may be excluded from "Referrers" report.
+<LI>If your site works with several domain names, you may build any report for one of it.
+<LI>It is possible to build any report for a certain page of your web-site.
+<LI>It is possible to build any report for users of Opera browser.
+</UL>
+
+<P>Necessary filter may be selected in the bottom part of the report page. </P>
+
+<HR size=1>
+<H1>Reports Description</H1>
+<HR size=1>
+
+<a name="attendance"> </a><H1>Report "Site Attendance"</H1>
+
+<P>This report shows dynamics of visits at your web-site for a certain period of time. The following periods may be set: </P>
+
+<table align="center" cellspacing=1 cellpadding=5 border=0 width="200">
+<tr class="tbl1"><td><B>Summarize</B></td><td><B>Period</B></td></tr>
+<tr class="tbl2"><td>By hours</td><td>1 day</td></tr>
+<tr class="tbl2"><td>By days</td><td>44 days</td></tr>
+<tr class="tbl2"><td>By weeks</td><td>307 days</td></tr>
+<tr class="tbl2"><td>By months</td><td>1308 days</td></tr>
+</table>
+
+<P><B>Hits</B> - number, indicating how many times your web-site pages have been loaded.
+<P><B>Hosts</B> - number of unique IP-addresses, where requests to your web-site have been made from. Several computers behind non-anonymous proxy-server are counted as several hosts.
+<P><B>Visitors</B> - number of unique visitors at the web-site (number of browsers, to be more specific). Identification is performed by means of  cookies. Correct count of users is performed only if you use graphical GIF counter (*)
+
+<P>With help of icons <img src="../img/graph_1.gif" width="18" height="18">, <img src="../img/graph_2.gif" width="18" height="18"> and <img src="../img/graph_3.gif" width="18" height="18"> you may adjust diagram appearance and average values displayed in diagram.
+
+<P><small>(*) Function "include" you can use only in auxiliary pages of your site.</small></P>
+
+<hr size=1>
+
+<a name="pages"> </a><H1>Report "Popular Pages"</H1>
+
+
+<PRE>
+/
+/cnstats/
+/cnstats/shots.xhtm
+</PRE>
+<P>"Full URL" and "Abridged URL" functions it is possible to cut off part of the address line following "?" symbol, for example:
+<P>Full URL:
+<PRE>
+/showtread.php?s=63843AB938CD944ED
+/showtread.php?s=4058473C9498EF4949
+/index.php?page=2
+/index.php?page=1
+/index.php?page=2&str=gu%3dru
+</PRE>
+<P>Abridged URL:
+<PRE>
+/showtread.php
+/index.php
+</PRE>
+
+<hr size=1>
+<a name="input"> </a><H1>Report "Entry Points"</H1>
+
+<P>Entry points are entry pages, where visitors start browsing your web-site.
+<P>By clicking "[r]" link you may see all pages, referring to the given entry point. </P>
+
+<hr size=1>
+<a name="output"> </a>
+
+<H1>Report "Exit points"</H1>
+
+<P>Exit points are pages where visitor stops working with you web-site and closes the browser or jumps to another web-site. </P>
+<P>Option "Exclude random visitors" allows to exclude visitors who browsed only one document at your web-site. Very often these are visitors who came to your web-site by chance, for example from a search engine. This single page is both an entry point and an exit point for them. </P>
+
+
+<hr size=1>
+<a name="domains"> </a><H1>Report "Domain Names"</H1>
+
+<P>This report allows to identify popular domain names of your site, for instance:
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<PRE>
+http://www.host.ru/
+http://forum.host.ru/
+http://host.ru/
+http://new.host.ru/
+</PRE>
+
+<hr size=1>
+<a name="parts"> </a><H1>Report "First Level of the Site "</H1>
+
+<P>This report allows identification of the most popular sections for most web-sites:
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<PRE>
+/
+/cnstats/
+/cncat/
+/cnsearch_pro/
+/download.xhtm
+</PRE>
+<P>All information following symbol "/" is cut off. </P>
+
+<hr size=1>
+<a name="pathes"> </a>
+<H1>Report "Trace browsing"</H1>
+
+<P>This report helps to identify most popular browsing sequences.
+<P>A path is considered unique if only one visitor has followed it for a certain period of time. In this case, you may receive some extra information about the visitor.
+<P>This report is rather complicated and requires a considerable amount of time and memory for calculations.
+<P>Max calculating time is limited by default to 10 minutes. You may change this amount with the help of option <I>$STATS_CONF["slow_reports_time_limit"]</I>, for example:
+<PRE>
+$STATS_CONF["slow_reports_time_limit"]=1200;
+// 20 minutes (or 1200 seconds)
+</PRE>
+<P>Max amount of the memory used depends on PHP settings. By default it is 8 Mb. You may change this amount with the help of option <I>$STATS_CONF["slow_reports_memory_limit"]</I>, for example:
+<PRE>
+$STATS_CONF["slow_reports_memory_limit"]="64M"
+</PRE>
+
+<P>More information about memory distribution may be found at <a href="http://www.php.net/manual/en/ini.sect.resource-limits.php#ini.memory-limit" target="_blank">the official PHP web-site</a>.</P>
+
+<hr size=1>
+<a name="depth"> </a>
+<H1>Report "Depth of browsing"</H1>
+
+<P>This report allows to calculate an average of pages viewed by the visitors of your web-site. </P>
+
+<hr size=1>
+<a name="referers"> </a><H1>Report "Referrers"</H1>
+
+<P>This report contains pages, where visitors have come to your web-site from. In fact, these are pages containing links to your web-site.
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<P>By means of special form, located in the bottom part of the report, you can exclude unnecessary pages. Very often these are pages of own site or search systems.
+<P>Examples of excluded pages:
+
+<PRE>
+http://www.mysite.com
+http://mysite.com
+http://search.rambler
+http://www.google
+http://www.yandex
+http://yandex
+http://sm.aport.ru
+</PRE>
+
+<hr size=1>
+<a name="servers"> </a><H1>Report "Referring Servers"</H1>
+
+<P>This report is similar to "Referrers", it displays domain name of the server instead of full address of the page:
+<PRE>
+http://www.google.com/
+http://www.google.com.tw/
+http://www.yahoo.com/
+http://www.dmoz.org/
+</PRE>
+<P>Similar to the report "Referrers", only new web-sites where jumps have been registered from are displayed, and you can view the full list with the help of the. </P>
+
+
+<hr size=1>
+<a name="who"> </a>
+<a name="who_s"> </a>
+<a name="who_c"> </a>
+<a name="who_r"> </a>
+
+<H1>Reports "Jumps from Search Systems",  "Jumps from Search Directories ",  "Jumps from Rating Systems ",  "Jumps from Popular Sites "</H1>
+
+<P>This series of reports displays list of  popular web-sites, stored in the system, where jumps from are performed frequently enough. The sites are divided into three categories:
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<OL>
+<LI>Search systems
+<LI>Internet-directories
+<LI>Web-sites ratings
+</OL>
+
+<P>The fourth report is the sum of values of the above three.
+
+<hr size=1>
+<a name="who_history"> </a>
+<H1>Report "Jumps history"</H1>
+
+<P>The report allows tracking dynamics of visits from popular servers for the last 150 days.
+<P>This report requires prior calculations. If log-table contains data to build such report, you will a "Build Report" button. When you click it, prior calculations will be performed. It may take time.
+<P>When rebuilding report only new data will be calculated.
+<P>To view report, select necessary servers and click "Update".
+<P>You can not select more than three servers. </P>
+
+<hr size=1>
+<a name="phrases"> </a><H1>Report "Search Phrases"</H1>
+
+<P>The report displays a list of search phrases, which refer to your site when used in search systems. All search phrases are in lower case.
+<P>By default only search phrases from new hosts are displayed, you can view the full list from additional menu.
+
+<hr size=1>
+<a name="links"> </a><H1>Report "Search Links"</H1>
+
+<P>The report displays a list of search links and phrases which are used in search systems to locate your web-site. Unlike the previous report, symbols case does not change, each phrase has name of the search server and link to the page with the search results.
+<P>By default, only phrases from new hosts are displayed, you can view the full list from the additional menu. </P>
+
+<hr size=1>
+<a name="searchpages"> </a><H1>Report "Pages Found"</H1>
+
+<P>This report displays list of pages, jumps from search systems have been performed to. This report helps to evaluate correctness of your texts and understand what pages are frequently found when visitors work with the search systems.
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<P>The report displays the following information:
+
+<UL>
+<LI>Search System - the search system, one of the jumps have been performed from.
+<LI>Pages Found - address of the page, jumps from the search system have been performed to.
+<LI>Search Phrases - the phrases, used for the jump. You can click to the left pictogramm to expand the full list of search phrases.
+</UL>
+
+<hr size=1>
+<a name="goodies"> </a><H1>Report "Partners"</H1>
+
+<P>This report is similar to the series of reports "Jumps from Popular Sites", but in this one you can add your partners in the additional menu.
+<P>For example, you exchange links with http://www.linksite.com/, then you add two records to the list of partners:
+
+<UL>
+<LI>URL  - http://www.linksite.com/,  Name: LinkSite
+<LI>URL  - http://linksite.com/,  Name: LinkSite
+</UL>
+
+<P>When more than 5 partners will be recorded in the list, you will be able to evaluate efficiency of cooperation with this or that partner. </P>
+
+<hr size=1>
+<a name="ip"> </a><H1>Report "IP addresses"</H1>
+
+<P>This report displays list of hosts that accessed your web-site during a certain period of time. Report data is sorted by number of requests. The report can be used to evaluate activity of visitors coming from a certain IP-address or sub-network. For example, you can evaluate activity of your employees or employees of your competitor, though you have to know what IP-addresses belong to them.
+<P>Proxy-server is shown in brackets (). By clicking on IP-address you can find out additional information about it - country (*), whois information, and list of pages visited from this IP. Hence,  you may follow the visitor's route at your site. "Brief report" is very convenient for that purpose.
+<P>(*) A country can be identified only if you had loaded country database, more information about that in Report "Countries". </P>
+
+
+<hr size=1>
+<a name="subnets"> </a><H1>Report "Networks"</H1>
+
+<P>This report helps to identify number of visits from certain networks. These can be local networks, metropolitan area networks or wide area networks.
+<P>List of networks can be created by clicking "List of sub-networks" option of the additional menu. Number of networks added to the list is limited by the length of the mysql query. </P>
+
+<hr size=1>
+<a name="lang1"> </a><H1>Report "Languages"</H1>
+
+<P>This report allows identifying languages, used by your visitors in their operating systems. The language is identified by "Accept-Languages" field of HTTP query. See Report "Accept-Languages". </P>
+
+<hr size=1>
+<a name="lang2"> </a>
+
+<H1>Report "Languages by countries"</H1>
+
+<P>Report "Languages by countries" helps to define what languages are supported by your visitors' operating systems depending on the country. This report allows more precise description of your web-site audience. </P>
+
+<hr size=1>
+<a name="countries"> </a>
+
+<H1>Report "Countries"</H1>
+
+<P>This report shows citizens of what countries visit your web-site.
+
+<P>CNStats works with GeoIP database of countries (<a href="http://www.maxmind.com/?rId=cnsoftware">www.maxmind.com</a>). To identify countries correctly, you must follow the below procedure:
+
+<UL>
+<LI>Download a database from the official GeoIP web-site (<a href="http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz">direct link</a>);
+<LI>Unpack it to the directory cnstats/geoip. The file should be named GeoIP.dat.
+</UL>
+
+<P>The report will build an interactive world map, highlighting countries, where most of your visitors live in. </P>
+
+<hr size=1>
+<a name="cities"> </a>
+
+<H1>Report "Cities"</H1>
+
+<P>This report shows what cities inhabitants visit your web-site.
+
+<P>CNStats works with the GeoIPCity database (<a href="http://www.maxmind.com/">www.maxmind.com</a>). To identify cities correctly, you must follow the below procedure:
+
+<UL>
+<LI>Download GeoIPCity database (<a href="http://www.weblogexpert.com/files/WLECityDB.zip">direct link</a>);
+<LI>Unpack it to the directory cnstats/geoip (file should be named GeoIPCity.dat).
+</UL>
+
+<P>The report will build an interactive map, highlighting cities, where most of your visitors live in. Point size on the map is buil as follows: </P>
+
+<table align="center" cellspacing=1 cellpadding=5 border=0 width="400">
+<tr class="tbl1" nowrap><td align="center"><b>Point size<br><small>(in pixels)</small></b></td><td align="center"><b>Number of visits</b></td></tr>
+<tr class="tbl2" align="center"><td>1</td><td>from 1 to 5</td></tr>
+<tr class="tbl2" align="center"><td>3</td><td>from 6 to 10</td></tr>
+<tr class="tbl2" align="center"><td>5</td><td>from 11 to 100</td></tr>
+<tr class="tbl2" align="center"><td>7</td><td>from 101 to 1000</td></tr>
+<tr class="tbl2" align="center"><td>9</td><td>from 1001 to 10000</td></tr>
+<tr class="tbl2" align="center"><td>11</td><td>more than 10001</td></tr>
+</table>
+<br>
+
+<hr size=1>
+<a name="system"> </a><H1>Report "Agents"</H1>
+
+<P>Heading field User-Agent contains information about visitor agent which sends a request. This field is used for statistical purposes, tracking protocol errors, and automated identification of visitor agents. It is not obligatory, nevertheless visitor agents always have t o include this field in their requests. The field may contain several lines, representing information about name of the software, optional backslash with the note about software version and other software, included in the visitor agent. According to agreement, software is listed in descending order according to its importance for identification of the application.
+<P>Examples:
+<PRE>
+Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 4.0)
+Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+             Opera 7.23 [en]
+Mozilla/5.0 (Windows; U; Windows NT 5.0; fr; rv:1.6)
+             Gecko/20040206 Firefox/0.8
+</PRE>
+
+<hr size=1>
+<a name="lang"> </a><H1>Report "Accept-Languages"</H1>
+
+<P>By means of Accept-Languages field a browser renders language marker in a special form.
+
+<P>The language marker identifies a natural language. Computer languages are not included in the list.
+<P>Language marker HTTP syntax and register is the same as identified in RFC 1766. The language marker consists of one or more parts: primary language marker and succession of sub-markers, which can be omitted:
+<PRE>
+language-tag        = primary-tag *( "-" sub-tag )
+primary-tag        = 1*8ALPHA
+sub-tag
+        = 1*8ALPHA
+</PRE>
+<P>Space symbol is not allowed, upper or lower case does not matter. List of language markers is controlled by IANA. Below examples of language markers can be seen:
+<PRE>
+en,
+en-US,
+ru,
+ru;q=1.0,
+en;q=0.9
+</PRE>
+<P>where any two first symbols of the primary mark represent an ISO 639 language abbreviation and first two symbols of the initial sub-marker correspond to the ISO 3166 country code. </P>
+
+<hr size=1>
+<a name="browsers"> </a><H1>Report "Browsers"</H1>
+
+<P>This report helps to identify what browsers and what versions of browsers are used by visitors of your web-site.
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+<P>You can switch display of browsers version on and off in the additional menu.
+
+
+<hr size=1>
+<a name="robots"> </a><H1>Report "Robots"</H1>
+
+<P>This report displays list of robots which requested your web-site pages. Mostly, these are indexing robots belonging to search systems. You may adjust settings of this report in the additional menu.
+<P>Full report contains the following data:
+
+<UL>
+<LI><B>Robot</B> - name of the search robot (for example, Google Bot)
+<LI><B>User-Agent</B> - robot's identification string
+<LI><B>Number</B> - number of pages requested by robot
+<LI><B>Last visit</B> - date of robot's last visit
+<LI><B>First visit</B> - date of robot's first visit
+</UL>
+
+<P>The abridged version of the report contains simple list of robots. If you click on a link, you will be forwarded to the report "Log" with preset filter for User-Agent field. </P>
+
+<hr size=1>
+<a name="os"> </a><H1>Report "Operating Systems"</H1>
+
+<P>This report displays what operating systems are installed on computers of visitors, who attend your web-site most frequently.
+<P>By default, new (unique) jumps (new hosts) are displayed. And you can view the full list from the additional menu as well.
+
+<hr size=1>
+<a name="now"> </a><H1>Report "On-Line Visitors"</H1>
+
+<P>This report shows list of visitors who have attended your web-site for the last 4 minutes. By means of additional menu you can view detailed or abridged version of this report.
+<P>Detailed report contains the following data:
+
+<UL>
+<LI><B>Date</B> -  precise date and time of page load
+<LI><B>URL</B> - address of the loaded page
+<LI><B>Referrer</B> - address of the referring page
+<LI><B>IP</B> - visitor's IP address
+<LI><B>Proxy</B> - IP-address of the proxy server, if a visitor uses one
+<LI><B>User-Agent</B> - Browser identification string
+<LI><B>Language</B> - language installed in visitor's operating system
+<LI><B>Country</B> - is displayed only for the visitors of the first page (entry point). If the host is not unique (this is not the first page, attended by the visitor), country information is not collected to spare server resources.
+</UL>
+
+<P>Abridged version:
+
+<UL>
+<LI><B>Date</B> -  precise date and time of page load
+<LI><B>IP</B> - visitor's IP address
+<LI><B>URL</B> - address of the loaded page
+<LI><B>Referrer</B> - address of the referring page
+</UL>
+
+<hr size=1>
+<a name="log"> </a><H1>Report "Log"</H1>
+
+<P>All visits for a certain period of time are displayed in the log table. By means of additional menu you can view detailed or abridged version of this report.
+<P>Detailed report contains the following data:
+
+<UL>
+<LI><B>Date</B> -  precise date and time of page load
+<LI><B>URL</B> - address of the loaded page
+<LI><B>Referrer</B> - address of the referring page
+<LI><B>IP</B> - visitor's IP address
+<LI><B>Proxy</B> - IP-address of the proxy server, if a visitor uses one
+<LI><B>User-Agent</B> - Browser identification string
+<LI><B>Language</B> - language installed in visitor's operating system
+<LI><B>Country</B> - is displayed only for the visitors of the first page (entry point). If the host is not unique (this is not the first page, attended by the visitor), country information is not collected to spare server resources.
+</UL>
+
+<P>Abridged version:
+
+<UL>
+<LI><B>Date</B> -  precise date and time of page load
+<LI><B>IP</B> - visitor's IP address
+<LI><B>URL</B> - address of the loaded page
+<LI><B>Referrer</B> - address of the referring page
+</UL>
+
+<hr size=1>
+<a name="dbsize"> </a>
+<H1>Report "Database Size"</H1>
+
+<P>This report is technical one and provides with information about CNStats database size. This information will help you to set optimal number of days you may keep statistics for. </P>
+
+<hr size=1>
+<a name="datafiles"> </a>
+<H1>Data files</H1>
+
+<P>Specific data is required to build certain reports. For example, it is necessary to know how User-Agent field depends on the operating system to build "Operating systems" report.
+
+<P>Windows XP is identified by presence of the string "Windows NT 5.1", Windows 2000 is identified by the stirng "Windows NT 5.0"
+<P>Strings, identifying operating systems are called 'tokens'.
+<P>Tokens are employed in the following reports:
+
+<UL>
+<LI>jumps from search systems;
+<LI>jumps from search directories;
+<LI>jumps from rating systems;
+<LI>jumps from popular servers;
+<LI>jumps history;
+<LI>search phrases;
+<LI>search links;
+<LI>pages found;
+<LI>browsers;
+<LI>robots.
+</UL>
+
+</BODY>
+</HTML>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Перечень заказа пользователя %userIDTitle%</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link href="/css/orders.css" rel="stylesheet" type="text/css">
+</head>
+
+<body bgcolor="#F6F6F7">
+<table width="500" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tblup">
+  <tr> 
+    <td width="202"><img src="/images/carumba.gif" width="202" height="44"></td>
+    <td align="right"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="right">Номер пользователя (карты):</td>
+          <td width="50">%userID%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br>
+<form name="commentForm" action="/carorders?cmd=%ordertype%&act=setMessage" method="post">
+<input type="hidden" name="orderID" value="%orderID%">
+
+<table width="500" border="0" cellpadding="5" cellspacing="1" bgcolor="C6C6C6">
+  <tr bgcolor="#DBDBDB"> 
+    <td>Коментарий к заказу</td>
+  </tr>
+  <tr bgcolor="#F6F6F6"> 
+    <td><p> 
+        <textarea name="message" class="widesel2">%message%</textarea>
+        <br>
+        <a style="cursor: hand" onClick="commentForm.submit(); return false;">Обновить</a></p>
+      </td>
+  </tr>
+</table>
+<br>
+</form>
+<form name="recalcForm" action="/carorders?cmd=%ordertype%&act=recalc" method="post">
+<input type="hidden" name="orderID" value="%orderID%">
+
+<table width="500" border="0" cellpadding="5" cellspacing="1" bgcolor="C6C6C6">
+  <tr bgcolor="#DBDBDB"> 
+    <td bgcolor="#DBDBDB"><strong>Наименование</strong></td>
+    <td width="40"><strong>Цена</strong></td>
+    <td width="40"><strong>Кол-во</strong></td>
+    <td width="75" align="center" bgcolor="#DBDBDB"><strong>Удалить</strong></td>
+  </tr>
+  %partsrow%
+  <tr bgcolor="#DBDBDB"> 
+    <td><strong>Итого:</strong></td>
+    <td>%sum%</td>
+    <td align="center">%num%</td>
+    <td align="center"><a onClick="recalcForm.submit(); return false;"><img src="/images/recalc.gif" width="75" height="15" border="0"></a></td>
+  </tr>
+</table>
+</form>
+<br>
+
+<form name="addPart" action="/carorders?cmd=%ordertype%&act=addPart" method="post">
+<input type="hidden" name="orderID" value="%orderID%">
+
+<table width="500" border="0" cellpadding="5" cellspacing="1" bgcolor="C6C6C6">
+  <tr bgcolor="#DBDBDB"> 
+    <td colspan="3">Добавить товар</td>
+  </tr>
+  <tr bgcolor="#F6F6F6"> 
+    <td><input name="accID" class="input02" value="accID" type="text"></td>
+    <td width="40"><input name="accCount" class="input02" value="1" type="text"></td>
+    <td width="75" bgcolor="#F6F6F6"><a style="cursor: hand" onClick="addPart.submit(); return false;">Добавить</a></td>
+  </tr>
+</table>
+</form>
+
+</body>
+</html>

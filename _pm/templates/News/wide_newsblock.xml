@@ -1,0 +1,15 @@
+<container>
+	<div class="blokdwn">
+									  %items%
+	</div>
+	<div class="items">
+	<div class="more"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" /><a href="/main/reviews">Все обзоры и статьи</a></div>
+
+	</div>
+
+
+</container>
+
+<item>
+	<img src="/images/nws.gif" width="8" height="9"  alt="" /><a href="%news_link%">&nbsp;%short_title%</a><br />
+</item>

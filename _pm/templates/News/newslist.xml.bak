@@ -1,0 +1,13 @@
+<container>
+                 <div class="podbor">
+                               %items%
+                            </div>
+</container>
+
+<separator>
+<br/>
+</separator>
+
+<item>
+	<img src="/images/nws.gif" width="8" height="9"  alt="" /><a href="%news_link%">&nbsp;%short_title%</a><br />
+</item>

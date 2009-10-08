@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !((^/typeInDB.php)|(^/pic.php)|(^/small_image.php)|(^/image.php)|(^/favicon.ico)|(^/images)|(^/pics)|(^/design)|(^/stat)|(^/products)|(^/js)|(^/css)|(^/js)|(^/index2.php)|(^/robots.txt)|(^/_sql)|(^/rss.xml)|(^/_pm/w3search))
+RewriteCond %{REMOTE_ADDR} ((195.131.187.*)|(195.131.163.135)|(85.249.229.251)|(85.249.254.254)|(81.211.110.82)|(133.27.228.132)|(195.182.128.14)|(62.181.41.190)|(195.209.227.137)|(80.73.207.35)|(128.30.52.13)|(127.0.0.1)|(81.222.209.208)|(81.211.95.182))
+
+#RewriteCond %{REMOTE_ADDR} 84.204.112.13
+RewriteRule ^.*$ /index2.php [L]

@@ -1,0 +1,1441 @@
+<?
+    class Catalogue extends AbstractModule
+    {
+        var $producers, $dNames;
+
+        function Catalogue()
+        {
+            $this->publicFunctions = array("getContent", "getItemType", 
+                                           "getSubItemType", "getItemDesc", "getSpecificDataForEditing", 
+                                           "updateSpecificData", "getSpecificBlockDesc", "getAdditionalColumns", 
+                                           "updateAdditionalColumns", "getDataListByPageID");
+            $this->producers = array();
+            $this->priceTypes = array();
+            $this->dNames = array(
+                "CatItem" =>
+                    array("accPlantID", "deliveryID", "deliveryCode", "basePrice", "salePrice", 
+                          "smallPicture", "stdPicture", "bigPicture", "ptID", "tplID", "notAvailable"),
+                "Category" =>
+                    array("MustUseCompatibility", "PicturePath", "DescriptionTemplate", "FilterTemplate")
+            );
+
+            $this->additionalColumns = array(
+                "CatItem" => array("basePrice" => "text", "salePrice" => "text", "ptID" => "text", "notAvailable" => "checkbox"),
+                "Category" => array()
+            );
+
+            SetCfg("Catalogue.perPage", 10);
+        }
+
+        function getSpecificDataForEditing($args)
+        {
+            global $structureMgr, $templatesMgr;
+            
+            if ($args[0] != -1)
+            {
+                $md = $structureMgr->getMetaData($args[0]);
+            }
+            else
+                $md["DataType"] = $args[1];
+            
+            switch ($md["DataType"])
+            {
+                case "Category":
+                {
+                    $sData = array();
+                    
+                    if ($args[0] != -1) //for edit
+                    {
+                        $q = "SELECT MustUseCompatibility, PicturePath, DescriptionTemplate, FilterTemplate FROM pm_as_categories WHERE sID=$args[0]";
+                        
+                        $qr = mysql_query($q);
+
+                        if (!$qr)
+                            trigger_error("Error while trying to get SpecificData [$q] - " . mysql_error(), PM_FATAL);
+
+                        if (mysql_num_rows($qr) == 0)
+                            trigger_error("Data incompatibiliy while trying to get SpecificData [$q]", PM_FATAL);
+                        
+                        $r = mysql_fetch_assoc($qr);
+                    }
+                    else //for adding
+                    {
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                            $r[$dn] = "";
+                    }
+
+                    $sData["PicturePath"] = array ("Путь к изображениям товаров", "text", 80, $r["PicturePath"]);
+                    $sData["DescriptionTemplate"] = array ("Шаблон страницы описания товара", "dropdown", "", array("details1.xml" => "details1.xml"));
+
+                    $sData["FilterTemplate"] = array ("Шаблон для фильтра", "dropdown", $r["FilterTemplate"], 
+                                                      array("std_select.html" => "std_select.html", 
+                                                      "autostaff_select.html" => "autostaff_select.html",
+                                                      "oils_select.html" => "oils_select.html",
+                                                      "liquids_select.html" => "liquids_select.html"
+                                                      )
+                                                      );
+
+                    $sData["MustUseCompatibility"] = array ("Использовать у товаров<br>совместимость с автомобилями", "checkbox", $r["MustUseCompatibility"]);
+                    return $sData;
+                }
+                case "CatItem":
+                {
+                    $sData = array();
+                    
+                    $this->getProducers();
+                    $this->getPriceTypes();
+
+                    $sData["accPlantID"] = array("Производитель", "dropdown", "", $this->producers, /*"новый", 20*/);
+
+                    if ($args[0] != -1) //for edit
+                    {
+                        $q = "SELECT accID, accPlantID, deliveryID, deliveryCode, basePrice, salePrice, smallPicture, stdPicture, bigPicture,
+                        MustUseCompatibility, ptID, tplID 
+                        FROM pm_as_parts p LEFT JOIN pm_as_categories c ON (p.accCatID = c.accCatID) WHERE p.sID=$args[0]";
+                        
+                        $qr = mysql_query($q);
+
+                        if (!$qr || mysql_num_rows($qr) != 1)
+                            trigger_error("Error while trying to get SpecificData [$q] - " . mysql_error(), PM_FATAL);
+
+                        $r = mysql_fetch_assoc($qr);
+                    }
+                    else //for adding
+                    {
+                        $q = "SELECT MustUseCompatibility FROM pm_as_categories WHERE sID=$args[2]";
+                        
+                        $qr = mysql_query($q);
+
+                        if (!$qr)
+                            trigger_error("Error while trying to get SpecificData [$q] - " . mysql_error(), PM_FATAL);
+
+                        list($muc) = mysql_fetch_row($qr);
+                        
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                            $r[$dn] = "";
+
+                        $r["MustUseCompatibility"] = $muc;
+                        $r["tplID"] = "2";
+                    }
+
+                    $sData["accPlantID"][2] = $r["accPlantID"];
+
+                    $sData["deliveryID"] = array ("Поставщик", "text", 10, $r["deliveryID"]);
+                    $sData["deliveryCode"] = array ("Код поставщика", "text", 10, $r["deliveryCode"]);
+                    $sData["basePrice"] = array ("Цена закупки, руб", "text", 10, $r["basePrice"]);
+                    $sData["salePrice"] = array ("Базовая цена, руб", "text", 10, $r["salePrice"]);
+                    
+                    $sData["ptID"] = array("Тип цены", "dropdown", $r["ptID"], $this->priceTypes, /*"новый", 20*/);
+//!!!SD_EDIT                    $sData["tplID"] = array("Шаблон (1 - для запчастей, 2 - для остальных товаров)", "text", 4, $r["tplID"]);
+                    $sData["notAvailable"] = array ("Нет в наличии", "checkbox", $r["notAvailable"]);
+
+                    //Specific (per category) item properties
+                    $props = $this->getCatItemProperties($args[0], 
+                         isset($args[1]) ? $args[1] : "", 
+                         isset($args[2]) ? $args[2] : -1);
+
+                    if (count($props) > 0)
+                    {
+                        $sData["Props"] = array("Специальные параметры", "fieldset");
+
+                        for ($ip = 0; $ip < count($props); $ip++)
+                        {
+                            $propName = $props[$ip][1];
+                            if ($props[$ip][2] != "")
+                                $propName .= ", " . $props[$ip][2];
+
+                            $sData["Props"][2]["prop" . $props[$ip][0]] = array($propName, "text", 50, $props[$ip][3]);
+                        }
+                    }
+                    
+                    $sData["smallPicture"] = array ("Маленькое изображение", "text", 65, $r["smallPicture"]);
+                    $sData["stdPicture"] = array ("Стандартное изображение", "text", 65, $r["stdPicture"]);
+                    $sData["bigPicture"] = array ("Большое изображение", "text", 65, $r["bigPicture"]);
+
+                    if ($r["MustUseCompatibility"])
+                    {
+                        $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID)";
+                        $qr2 = mysql_query($q2);
+
+                        if (!$qr2)
+                            trigger_error("Error retrieving car models [$q2] - " . mysql_error(), PM_FATAL);
+
+                        $cars = array();
+                        
+                        while (false !== (list($carID, $carModel) = mysql_fetch_row($qr2)))
+                        {
+                            $cars[$carID] = $carModel;
+                        }
+
+                        $carLinks = array();
+                        	
+                        if ($args[0] != -1)
+                        {
+                            $q2 = "SELECT carID FROM pm_as_acc_to_cars WHERE accID=" . $r["accID"];
+                            $qr2 = mysql_query($q2);
+
+                            if (!$qr2)
+                                trigger_error("Error retrieving car model links [$q2] - " . mysql_error(), PM_FATAL);
+                            
+                            while (false !== (list($carID) = mysql_fetch_row($qr2)))
+                            {
+                                $carLinks[$carID] = "1";
+                            }
+                        }
+
+                        $sData["carLinks"] = array("Совместимость", "checkbox_list", $carLinks, $cars, 3);
+                    }
+
+                    return $sData;
+                }
+            }
+
+            return array();
+        }
+        
+        function updateCompatibility($accID, $cleanBeforeInsert)
+        {
+            if (!$accID)
+                trigger_error("accID must be provided", PM_FATAL);
+
+            $q2 = "SELECT carID FROM pm_as_cars";
+            $qr2 = mysql_query($q2);
+
+            if (!$qr2)
+                trigger_error("Error retrieving car models [$q2] - " . mysql_error(), PM_FATAL);
+
+            if ($cleanBeforeInsert)
+                mysql_query("DELETE FROM pm_as_acc_to_cars WHERE accID=$accID");
+
+            while (false !== (list($carID) = mysql_fetch_row($qr2)))
+            {
+                $car = _post("car_" . $carID);
+                if ($car)
+                    mysql_query("INSERT INTO pm_as_acc_to_cars (carID, accID) VALUES($carID, $accID)");
+            }
+
+        }
+
+        function updateProperties($accID, $props, $cleanBeforeInsert)
+        {
+            if (!$accID)
+                trigger_error("accID must be provided", PM_FATAL);
+
+            if (count($props) == 0)
+                trigger_error("\$props cannot be empty", PM_FATAL);
+
+            if ($cleanBeforeInsert)
+                mysql_query("DELETE FROM pm_as_parts_properties WHERE accID=$accID");
+
+            foreach ($props as $prop)
+            {
+                $nVar = _post("prop" . $prop[0]);
+                {
+                    $q = "INSERT INTO pm_as_parts_properties (accID, propListID, propValue) VALUES($accID, $prop[0], " . prepareVar($nVar) . ")";
+                    if (!mysql_query($q))
+                        trigger_error("Error inserting specific properties - " . mysql_error(), PM_FATAL);
+                }
+            }
+        }
+        
+
+        function updateSpecificData($args)
+        {
+            global $structureMgr;
+            $sData = array();
+            $qSet = "";
+            
+
+            if ($args[0] != -1)
+            {
+                $md = $structureMgr->getMetaData($args[0]);
+            }
+            else
+            {
+                trigger_error("pageID must be specified", PM_WARNING);
+                return false;
+            }
+
+            if (isset($args[1]) && $args[1])
+            {
+                //WE MUST INSERT
+                $keys = "";
+                $vals = "";
+
+                switch ($md["DataType"])
+                {
+                    case "Category":
+                    {
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                        {
+                            $v = prepareVar(_post($dn));
+                            if ($keys)
+                                $keys .= ", ";
+                            $keys .= $dn;
+                            
+                            if ($vals)
+                                $vals .= ", ";
+                            $vals .= $v;
+                        }
+                        $q = "INSERT INTO pm_as_categories (sID, $keys) VALUES (" . $args[0] . ", $vals)";
+
+                        $qr = mysql_query($q);
+                        break;
+                    }
+                    case "CatItem":
+                    {
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                        {
+                            $v = prepareVar(_post($dn));
+                            if ($keys)
+                                $keys .= ", ";
+                            $keys .= $dn;
+                            
+                            if ($vals)
+                                $vals .= ", ";
+                            $vals .= $v;
+                        }
+                        $accCatID = $this->getCatIDByPageID($structureMgr->getParentPageID($args[0]));
+
+                        $q = "INSERT INTO pm_as_parts (sID, accCatID, $keys) VALUES (" . $args[0] . ", $accCatID, $vals)";
+
+                        $qr = mysql_query($q);
+                        if (!$qr)
+                            trigger_error("Inconsistency - couldn't add specific info for good of cat [$accCatID] - " . mysql_error(), PM_FATAL);
+
+                        $q1 = "SELECT accID FROM pm_as_parts WHERE sID=" . $args[0];
+                        $qr1 = mysql_query($q1);
+                        if (!$q1)
+                            trigger_error("Error while selecting new accID - " . mysql_error(), PM_FATAL);
+
+                        list ($accID) = mysql_fetch_row($qr1);
+                        $this->updateCompatibility($accID, false);
+
+                        $props = $this->getCatItemProperties(-1, "CatItem", $structureMgr->getParentPageID($args[0]));
+                        if (count($props) > 0)
+                           $this->updateProperties($accID, $props, false);
+
+                        break;
+                    }
+                }
+
+                if (!$qr)
+                {
+                    trigger_error("Error while trying to insert SpecificData [$q] - " . mysql_error(), PM_WARNING);
+                    return false;
+                }
+            }
+            else
+            {
+                //WE MUST UPDATE
+                switch ($md["DataType"])
+                {
+                    case "Category":
+                    {
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                        {
+                            $v = prepareVar(_post($dn));
+                            if ($qSet)
+                                $qSet .= ", ";
+                            $qSet .= $dn . "=" . $v;
+                        }
+                        $q = "UPDATE pm_as_categories SET $qSet WHERE sID = " . $args[0];
+
+                        $qr = mysql_query($q);
+                        break;
+                    }
+                    case "CatItem":
+                    {
+                        foreach ($this->dNames[$md["DataType"]] as $dn)
+                        {
+                            $v = prepareVar(_post($dn));
+                            if ($qSet)
+                                $qSet .= ", ";
+                            $qSet .= $dn . "=" . $v;
+                        }
+
+                        $q = "UPDATE pm_as_parts SET $qSet WHERE sID = " . $args[0];
+
+                        $qr = mysql_query($q);
+                        
+                        list ($accID) = mysql_fetch_row(mysql_query("SELECT accID FROM pm_as_parts WHERE sID=" . $args[0]));
+
+                        $this->updateCompatibility($accID, true);
+                        
+                        $props = $this->getCatItemProperties($args[0], "", -1);
+                        if (count($props) > 0)
+                           $this->updateProperties($accID, $props, true);
+                        
+                        break;
+                    }
+                }
+
+                if (!$qr)
+                {
+                    trigger_error("Error while trying to update SpecificData [$q] - " . mysql_error(), PM_FATAL);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+        function updateAdditionalColumns($args)
+        {
+            global $structureMgr;
+            
+            $sID = $args[0];
+            $qSet = "";
+            if ($sID != -1)
+            {
+                $md = $structureMgr->getMetaData($sID);
+            }
+            else
+            {
+                trigger_error("pageID must be specified", PM_WARNING);
+                return false;
+            }
+
+            {
+                //WE MUST UPDATE
+                switch ($md["DataType"])
+                {
+                    case "CatItem":
+                    {
+                        foreach ($this->additionalColumns[$md["DataType"]] as $ac => $acv)
+                        {
+                            $nv = _post("$ac$sID");
+                            
+                            if ($acv == "checkbox")
+                            {
+                                if ($nv == "")
+                                    $nv = "0";
+                                else
+                                    $nv = "1";
+                            }
+
+                            $v = prepareVar($nv);
+
+                            if ($qSet)
+                                $qSet .= ", ";
+                            $qSet .= $ac . "=" . $v;
+                        }
+
+                        $q = "UPDATE pm_as_parts SET $qSet WHERE sID = " . $sID;
+
+                        $qr = mysql_query($q);
+                        break;
+                    }
+                    
+                    case "Category":
+                    {
+                        $qr = 1;
+                        break;	
+                    }
+                }
+
+                if (!$qr)
+                {
+                    trigger_error("Error while trying to update AdditionalColumns [$q] - " . mysql_error(), PM_FATAL);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+        function getSpecificBlockDesc($args)
+        {
+            $DataType = $args[0];
+            switch ($DataType)
+            {
+                case "Category":
+                    return "Параметры категории";
+                case "CatItem":
+                    return "Характеристики";
+            }
+            
+            return "";
+        }
+
+        function getItemDesc($args)
+        {
+            $DataType = $args[0];
+            switch ($DataType)
+            {
+                case "Category":
+                    return "";//Описание категории - не нужно, поэтому пустота и закладка пропадёт
+                case "CatItem":
+                    return "Описание товара";
+            }
+            
+            return "";
+        }
+
+        function getItemType($args)
+        {
+            $DataType = $args[0];
+            switch ($DataType)
+            {
+                case "Category":
+                    return array("категория", "категорию", "категории");
+                case "CatItem":
+                    return array("товар", "товар", "товара");
+            }
+            
+            return array();
+        }
+        
+
+        function getAdditionalColumns($args)
+        {
+            $DataType = $args[0];
+
+            switch ($DataType)
+            {
+                case "Category":
+                {
+                    return array("CatItem",
+                      "accPlantName" => array("Производитель", "label"), 
+                      "basePrice" => array("Цена закупки, руб", "text", 5),
+                      "salePrice" => array("Базовая цена, руб", "text", 5),
+                      "ptID" => array("Тип цены", "dropdown", $this->getPriceTypes()), 
+                      "notAvailable" => array("Нет в наличии", "checkbox")
+                    );
+                }
+            }
+            
+            return array();
+        }
+
+
+        function getCatItemProperties($pageID, $DataType, $parentID)
+        {
+            global $structureMgr;
+            
+            if ($pageID != -1)
+                $md = $structureMgr->getMetaData($pageID);
+            else
+                $md["DataType"] = $DataType;
+
+            $res = array();
+
+            switch ($md["DataType"])
+            {
+                case "CatItem":
+                {
+                    if ($pageID != -1)
+                    {
+                        $q2 = "SELECT accID FROM pm_as_parts WHERE sID = $pageID";
+                        list($accID) = mysql_fetch_row(mysql_query($q2));
+                        if (!$accID)
+                            trigger_error("Error fetching accID for CatItemProperties (sID=$pageID) [$q2]" . mysql_error(), PM_FATAL);
+
+
+                        $q = "SELECT app.propListID, propName, accMeasure, propValue, isHidden FROM pm_as_prop_list apl, pm_as_parts_properties app
+                        WHERE app.accID=$accID AND app.propListID = apl.propListID
+                        ORDER BY apl.OrderNumber";
+
+                        $qr = mysql_query($q);
+                        if (!$qr)
+                            trigger_error("Error while query [$q] - " . mysql_error(), PM_FATAL);
+                        
+                        while (false !== ($row = mysql_fetch_row($qr)))
+                        {
+                            $res[] = $row;
+                        }
+                    }
+                    else
+                    {
+                        $branch = $structureMgr->getCurrentBranch($parentID);
+                        for ($i = count($branch) - 1; $i >=0; $i--)
+                        {
+                            $accCatID = $this->getCatIDByPageID($branch[$i]);
+                            if ($accCatID == -1)
+                                break;
+
+                            $q2 = "SELECT propListID, propName, accMeasure, '', isHidden FROM pm_as_prop_list WHERE accCatID=$accCatID";
+                            $qr = mysql_query($q2);
+                            if (!$qr)
+                                trigger_error("Error fetching propNames for CatItems - " . mysql_error(), PM_FATAL);
+                            if (mysql_num_rows($qr) > 0)
+                            {
+                                while (false !== ($prop = mysql_fetch_row($qr)))
+                                {
+                                    $res[] = $prop;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    return $res;
+                }
+                default:
+                    return array();
+            }
+        }
+
+        function getSubItemType($args)
+        {
+            $DataType = $args[0];
+            switch ($DataType)
+            {
+                case "Article":
+                    return array("Category" => "категорию каталога");
+                case "Category":
+                    return array("CatItem" => "товар", "Category" => "категорию каталога");
+                case "CatItem":
+                    return array();
+            }
+            
+            return array();
+        }
+
+        function getCatIDByPageID($pageID)
+        {
+            $q2 = "SELECT accCatID FROM pm_as_categories WHERE sID = $pageID";
+            list($accCatID) = mysql_fetch_row(mysql_query($q2));
+            if (!$accCatID)
+                return -1;
+
+            return $accCatID;
+        }
+
+        function getContent($args)
+        {
+            global $structureMgr;
+            $md = $structureMgr->getMetaData($args[0]);
+
+            switch ($md["DataType"])
+            {
+                case "Category": 
+                    return $this->getCategory($args[0]);
+                case "CatItem":
+                    return $this->getCatItem($args[0]);
+                default:
+                    trigger_error("Unknown datatype: " . $md["DataType"], PM_FATAL);
+            }
+        }
+
+        function getCatItem($pageID)
+        {
+            $ci = $this->getCatItemByPageID($pageID);
+            $res = $this->getFilledItemDescriptionTemplate($ci);
+
+            return $res;
+
+        }
+
+        function &filterByDataType(&$branch, $dataType, &$catIDList, &$prodIDList)
+        {
+            global $structureMgr;
+
+            $res = array();
+            $filtered1 = array();
+            $gotFilter = 0;
+            
+            foreach ($branch as $item)
+            {
+                if ($gotFilter == 0)
+                {
+                    $filtered1 = $this->getCatItemsByParentPageID($structureMgr->getParentPageID($item["sID"]), _var("carID"), _var("producerID"), $catIDList, $prodIDList);
+                    $gotFilter = 1;
+                }
+
+                if ($item["DataType"] == $dataType && isset($filtered1[$item["sID"]]))
+                    $res[] = $item;
+
+                if (count($item["children"] > 0))
+                {
+                    $app = $this->filterByDataType(&$item["children"], $dataType, $catIDList, $prodIDList);
+                    
+                    for ($i = 0; $i < count($app); $i++)
+                        $res[] = $app[$i];
+                }
+            }
+            return $res;
+        }
+
+        function getCategory($pageID)
+        {
+            global $structureMgr, $templatesMgr;
+
+            $items = false;
+
+            $producerID = _var("producerID");
+            $carID = _var("carID");
+            
+            $car0 = _varByPattern('/c0-\\d+/');
+            $cats = _varByPattern('/c' . $carID . '-\\d+/');
+            $prodIDs = _varByPattern('/p-\\d+/');
+
+            if ($carID !== "" || $producerID !== "" || count($car0) > 0 || count($cats) > 0 || count($prodIDs) > 0)
+            {
+                $catIDList = array();
+                if (count($cats) == 0)
+                    $cats = $car0;
+
+                foreach($cats as $cat => $v)
+                    $catIDList[] = $v;
+
+                $prodIDList = array();
+
+                foreach($prodIDs as $prod => $v)
+                    $prodIDList[] = $v;
+
+                $branch2 = $structureMgr->getChildrenDataTypesForPageID($pageID, 2);
+                $branch = $this->filterByDataType(&$branch2, "CatItem", &$catIDList, &$prodIDList);
+
+                if (count($branch) > 0)
+                    $items = true;
+            }
+            else
+            {
+                $branch = $structureMgr->getChildrenDataTypesForPageID($pageID, 1);
+                for ($i = 0; $i < count($branch); $i++)
+                {
+                    if ($branch[$i]["DataType"] == "CatItem")
+                    {
+                        $items = true;
+                        break;
+                    }
+                }
+            }
+
+
+            if ($items == true)
+            {
+                return $this->getItemsListByPageID($pageID, &$branch);
+            }
+            else
+            {
+                return $this->getCategoryFilter($pageID, &$branch);
+            }
+        }
+
+        function getCarsList()
+        {
+            $q = "SELECT carID, plantName, carModel FROM pm_as_cars c LEFT JOIN pm_as_autocreators a ON (a.plantID = c.plantID) ORDER BY carID";
+            $qr = mysql_query($q);
+
+            if (!$qr)
+                trigger_error("Error getting cars list [$q] - " . mysql_error(), PM_FATAL);
+
+            $cars = array();
+            while (false !== ($car = mysql_fetch_row($qr)))
+            {
+                $cars[$car[0]] = array($car[1], $car[2] );
+            }
+
+            return $cars;
+        }
+
+        function getProducersByPageIDList($pageIDList)
+        {
+            if (count($pageIDList) == 0)
+                trigger_error("pageIDList should have at least one element", PM_FATAL);
+
+            $ids = "";
+
+            for ($i = 0; $i < count($pageIDList); $i++)
+            {
+                if ($i > 0)
+                    $ids .= ", ";
+                $ids .= $pageIDList[$i];
+            }
+
+            $q = "SELECT DISTINCT p.accPlantID, accPlantName, logotype FROM pm_as_parts p, pm_structure s, pm_as_producer pr 
+            WHERE pms_sID in ($ids) AND p.sID = s.sID AND pr.accPlantID = p.accPlantID AND isHidden=0";
+            $qr = mysql_query($q);
+            
+            if (!$qr)
+                trigger_error("Error aqcuiring producers [$q] - " . mysql_error(), PM_FATAL);
+
+            $res = array();
+            
+            while (false !== ($r = mysql_fetch_row($qr)))
+            {
+                $res[] = $r;
+            }
+
+            return $res;
+        }
+
+        function getCategoryFilter($pageID, &$branch)
+        {
+            global $structureMgr, $templatesMgr;
+            
+            $carlist = "";
+            $pager = "";
+
+            $topContent = $structureMgr->getData($pageID);
+            
+            $sData = $this->getSpecificDataForEditing(array($pageID));
+            
+            $tpl = $templatesMgr->getTemplate(-1, GetCfg("TemplatesPath") . "/Catalogue/" . $sData["FilterTemplate"][2]	);
+
+            if ($sData["MustUseCompatibility"][2])
+            //We need to generate cars list
+            {
+                $cars = $this->getCarsList();
+                $carCount = count($cars);
+                
+                //script to switch layers with categories that match the concrete car
+                $carlist .= 
+                "<script>
+                    function showCatForCar(carID)
+                    {
+                        c = document.getElementById(carID);
+                        if (c)
+                        {
+                            for (i=0; i <= $carCount; i++)
+                            {
+                                d = document.getElementById('catForCar' + i);
+                                if (d)
+                                    d.style.display = \"none\";
+                            }
+                            c.style.display = \"block\";
+                        }
+                        return true;
+                    }
+                </script>";
+
+
+                $carlist .= "<input type=\"radio\" name=carID value=0 checked onclick=\"showCatForCar('catForCar0');\"> <a class=\"levm\" href=\"?carID=0\">все</a><br/>\n";
+                
+                $catsForCar = "";
+                
+                $sIDin = "";
+                
+                for ($i=0; $i < count($branch); $i++)
+                {
+                    if ($i > 0)
+                        $sIDin .= ",";
+                    
+                    $sIDin .= $branch[$i]["sID"];
+                }
+
+                foreach ($cars as $carID => $car)
+                {
+                    $URL = "?carID=$carID";
+                    $carlist .= "<input type=\"radio\" name=carID value=$carID onclick=\"showCatForCar('catForCar$carID');\"> <a class=\"levm\" href=\"$URL\">" . $car[0] . " " . $car[1] . "</a><br/>\n";
+
+                    $catsForCar .= "<div style=\"display: none;\" id=\"catForCar$carID\">";
+
+/*
+SELECT ShortTitle, COUNT( DISTINCT atc.accID ), c.sID 
+FROM pm_as_cars ac, pm_as_acc_to_cars atc, pm_as_parts ap, pm_as_categories c, pm_structure s
+WHERE c.sID = s.sID AND atc.carID = ac.carID AND atc.accID = ap.accID 
+AND c.accCatID = ap.accCatID 
+AND ac.carID =$carID
+GROUP BY c.sID
+*/
+
+                    $qx = 
+                    "
+SELECT s2.ShortTitle, COUNT( DISTINCT s.sID ), s2.sID 
+FROM pm_structure s
+LEFT JOIN pm_as_parts p ON ( p.sID = s.sID ) 
+LEFT JOIN pm_as_acc_to_cars ac ON ( ac.accID = p.accID ) 
+LEFT JOIN pm_as_cars c ON ( ac.carID = c.carID ) 
+LEFT JOIN pm_structure s2 ON ( s2.sID = s.pms_sID ) 
+WHERE s.pms_sID
+IN ( $sIDin ) 
+AND c.carID =$carID
+GROUP BY s.pms_sID
+ORDER BY s2.OrderNumber
+";
+
+                    $qrx = mysql_query($qx);
+
+                    if (!$qrx)
+                        trigger_error("Error acquiring cat for carID=$carID");
+
+                    $catNum = 0;
+                    while (false !== ($ci = mysql_fetch_row($qrx)))
+                    {
+                        if ($ci[1] > 0)
+                        {
+                            $bsID = $ci[2];
+                            $URL = $structureMgr->getPathByPageID($ci[2], false);
+                            $catsForCar .= "<input type=\"checkbox\" value=\"$bsID\" name=\"c${carID}-$catNum\"> <a class=\"levm\" href=\"$URL?carID=$carID\">" . $ci[0] . " ($ci[1])</a><br/>\n";
+                            $catNum++;
+                        }
+                    }
+
+                    $catsForCar .= "</div>";
+                }
+
+                $catsForCar .= "<div id=\"catForCar0\">";
+                for ($i=0; $i < count($branch); $i++)
+                {
+                    $bsID = $branch[$i]["sID"];
+                    $URL = $structureMgr->getPathByPageID($bsID, false);
+                    $chCount = $structureMgr->getChildrenCount($bsID);
+                    if ($chCount > 0)
+                        $catsForCar .= "<input type=\"checkbox\" value=\"$bsID\" name=\"c0-$i\"> <a class=\"levm\" href=\"$URL\">" . $branch[$i]["Title"] . " ($chCount)</a><br/>\n";
+
+                }
+                $catsForCar .= "</div>";
+
+                $tpl = str_replace("%cars%", $carlist, $tpl);
+                $tpl = str_replace("%categories%", $catsForCar, $tpl);
+            }
+            else
+            {
+                //producers list
+                $producers = "<table width=100%><tr>";
+                
+                $pageIDList = array();
+                for ($i=0; $i < count($branch); $i++)
+                {
+                    $pageIDList[] = $branch[$i]["sID"];
+                }
+                
+                $prodList = array();
+                
+                if (count($pageIDList) > 0)
+                    $prodList = $this->getProducersByPageIDList($pageIDList);
+                
+
+                for ($i=0; $i < count($prodList); $i++)
+                {
+                    if (($prodList[$i][2]) && file_exists(GetCfg("ROOT") . $prodList[$i][2]))
+                        $isrc = $prodList[$i][2];
+                    else
+                        $isrc = "/products/empty.gif";
+                    
+                    if ($i % 3 == 0)
+                        $producers .= "</tr>\n<tr>";
+
+                    $prodID = $prodList[$i][0];
+                    $producers .= "<td align=center><a href=\"?producerID=$prodID\"><img border=0 alt=\"" . $prodList[$i][1] . "\" src=\"$isrc\"></a><br>" . $prodList[$i][1] . 
+                                  "<br><input type=\"checkbox\" value=\"" . $prodList[$i][0] . "\" name=\"p-$i\"><br/><br/></td>\n";
+                }
+
+                $producers .= "</tr></table>";
+
+                $res = "";
+
+                for ($i=0; $i < count($branch); $i++)
+                {
+                    $bsID = $branch[$i]["sID"];
+                    $URL = $structureMgr->getPathByPageID($branch[$i]["sID"], false);
+                    $chCount = $structureMgr->getChildrenCount($branch[$i]["sID"]);
+                    if ($chCount > 0)
+                        $res .= "<input type=\"checkbox\" value=\"$bsID\" name=\"c0-$i\"> <a class=\"levm\" href=\"$URL\">" . $branch[$i]["Title"] . " ($chCount)</a><br/>\n";
+//                        $res .= "<input type=\"checkbox\"> <a class=\"levm\" href=\"$URL\">" . $branch[$i]["Title"] . " ($chCount)</a><br/>\n";
+
+                }
+                $tpl = str_replace("%categories%", $res, $tpl);
+                $tpl = str_replace("%producers%", $producers, $tpl);
+            }
+            return $tpl . $topContent;
+        }
+
+
+        function getItemsListByPageID($pageID, &$branch)
+        {
+            global $structureMgr, $templatesMgr;
+            
+            $res = "";
+            $pager = "";
+
+            $topContent = $structureMgr->getData($pageID);
+
+            $pNum = $structureMgr->getPageNumberByPageID($pageID);
+            $URL = $structureMgr->getPathByPageID($pageID, false);
+
+            $carIDFilter = _var("carID");
+            
+            if ("" == $carIDFilter) 
+                $carIDFilter = "0";
+
+            $producerIDFilter = _var("producerID");
+
+            $prodIDFilter = _varByPattern('/p-\\d+/');
+
+                 
+            $perPage = GetCfg("Catalogue.perPage");
+
+            $startFrom = ($pNum - 1) * $perPage;
+            $endAt = $startFrom + $perPage - 1;
+            
+            $cnt = count($branch);
+
+            if ($endAt >= $cnt)
+                $endAt = $cnt - 1;
+
+            $pagesCount = ceil($cnt / $perPage);
+
+            if ($pagesCount < $pNum)
+            {
+                trigger_error("Invalid pageNumber [$pNum of $pagesCount] - possibly hacking or serious change in DB", PM_ERROR);
+            }
+            else
+            {
+                if ($pagesCount > 1)
+                {
+                    $tpl = $templatesMgr->getTemplate(-1, GetCfg("TemplatesPath") . "/" . "pager.html");
+                    $purePager = "";
+
+                    $filter = "";
+
+                    if (($carIDFilter != "") && (count($prodIDFilter) == 0))
+                       $filter .= "carID=$carIDFilter"; 
+
+                    if ($producerIDFilter != "")
+                    {
+                        if ($filter)
+                            $filter .= "&";
+                        $filter .= "producerID=$producerIDFilter"; 
+                    }
+                    else
+                    if ( count($prodIDFilter) > 0)
+                    {
+                        foreach ($prodIDFilter as $prod => $_p)
+                        {
+                            if ($filter)
+                                $filter .= "&";
+                            $filter .= "$prod=$_p"; 
+                        }
+                    }
+
+                    $cats = _varByPattern('/c' . $carIDFilter . '-\\d+/');
+                    if (count($cats) > 0)
+                    {
+                        foreach ($cats as $cat => $v)
+                        {
+                            if ($filter)
+                                $filter .= "&";
+                           
+                            $filter .= "$cat=$v"; 
+                        }
+                    }
+
+
+                    for ($i=1; $i <= $pagesCount; $i++)
+                    {
+                        if ($i > 1)
+                        {
+                            $purePager .= " - ";
+                            $u = $URL . "/page" . $i;
+                        }
+                        else
+                           $u = $URL;
+
+                        if ($filter)
+                            $u .= "?" . $filter;
+
+                        if ($i == $pNum)
+                        {
+                            $purePager .= $i;
+                        }
+                        else
+                        {
+                            $purePager .= "<a href=\"$u\" class=\"levm\">" . $i . "</a>";
+                        }
+                    }
+
+                    $pager = str_replace("%links%", $purePager, $tpl);
+                }
+                     
+                for ($i=$startFrom; $i <= $endAt; $i++)
+                {
+                    switch ($branch[$i]["DataType"])
+                    {
+                        case "CatItem":
+                        {
+                            $items = true;
+                            $ci = $this->getCatItemByPageID($branch[$i]["sID"]);
+                            $res .= $this->getFilledItemTemplate($ci);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return 
+            "
+              $topContent
+              $pager
+              <div class=\"items\"><table width=\"100%\" border=\"0\" cellpadding=\"5\" cellspacing=\"0\" bgcolor=\"#DCDDE0\" class=\"items-table\">
+              $res
+              </table></div>
+              <img src=\"/images/pix.gif\" width=1 height=10/><br>
+              $pager                                                                                     
+              ";
+        }
+
+        function getFilledItemTemplate($catItem)
+        {
+            global $structureMgr, $templatesMgr;
+            
+            if (count($catItem) == 0)
+                trigger_error("Invaid function call - arguments array is empty.", PM_FATAL);
+
+            $URL = $structureMgr->getPathByPageID($catItem["sID"], false);
+            $tpl = $templatesMgr->getTemplate(-1, GetCfg("TemplatesPath") . "/Catalogue/item" . $catItem["tplID"] . ".html");
+            $tpl = str_replace("%title%", $catItem["ShortTitle"], $tpl);
+            $tpl = str_replace("%link%", $URL, $tpl);
+            
+            //price generation must be moved to special function as it is called from at least two places
+            if ($catItem["ptPercent"] == 0)
+                $firstPrice = "<strong>" . round($catItem["salePrice"] - ($catItem["salePrice"] * 5 / 100)) . "</strong>";
+            else
+                $firstPrice = "<strong><font color=\"#CC0033\">" . 
+                              round($catItem["salePrice"] - ($catItem["salePrice"] * $catItem["ptPercent"] / 100)) . 
+                              "</font></strong>";
+
+
+            $props = $this->getCatItemProperties($catItem["sID"], "CatItem", $structureMgr->getParentPageID($catItem["sID"]));
+            
+            $prop_list = "";
+            foreach($props as $prop)
+            {
+               if ($prop[3] && !$prop[4])
+               {
+                   $prop_list .= "<strong>$prop[1]:</strong> $prop[3] $prop[2]<br/>\n";
+               }
+                 
+            };
+
+            $tpl = str_replace("%price%", "$firstPrice" . " / " . $catItem["salePrice"] . " руб.", $tpl);
+
+
+            $tpl = str_replace("%producer%", $catItem["accPlantName"], $tpl);
+            $tpl = str_replace("%props%", $prop_list, $tpl);
+            
+            if (!isset($catItem["Compatibility"]))
+                $catItem["Compatibility"] = "";
+
+            $tpl = str_replace("%car_compatibility%", $catItem["Compatibility"], $tpl);
+            
+            if ($catItem["smallPicture"] == NULL)
+            {
+                if (file_exists(GetCfg("ROOT") . $catItem["PicturePath"] . "/" . $catItem["sID"] . ".gif"))
+                    $catItem["smallPicture"] = $catItem["PicturePath"] . "/" . $catItem["sID"] . ".gif";
+                else
+                if ($catItem["logotype"] == NULL)
+                    $catItem["smallPicture"] = "/products/empty.gif";
+                else
+                    $catItem["smallPicture"] = $catItem["logotype"];
+            }
+            $tpl = str_replace("%picture%", "<img border=\"0\" src=\"" . $catItem["smallPicture"] . "\" alt=\"" . $catItem["ShortTitle"] . "\"/>", $tpl);
+            $tpl = str_replace("%goodID%", $catItem["accID"], $tpl);
+
+
+
+            return $tpl;
+        }
+
+        function getFilledItemDescriptionTemplate($catItem)
+        {
+            global $structureMgr, $templatesMgr;
+            
+            if (count($catItem) == 0)
+                trigger_error("Invaid function call - arguments array is empty.", PM_FATAL);
+
+            $tplName = GetCfg("TemplatesPath") . "/Catalogue/" . $catItem["DescriptionTemplate"];
+            
+            $tpl = $templatesMgr->getTemplate(-1, $tplName);
+
+            $blocks = $templatesMgr->getValidTags($tpl, 
+                          array("container", "picture", "description", "spec", "details", "zoom"));
+            
+            //SPECIFICATIONS
+            $spec = "";
+
+            $specs = array("Compatibility" => "Марка", "accPlantName" => "Производитель");
+
+            foreach ($specs as $key => $val)
+            {
+                if (isset($catItem[$key]) && $catItem[$key])
+                {
+                    $sp = $blocks["spec"];
+                    $sp = str_replace("%spec_name%", $val, $sp);
+                    $sp = str_replace("%spec_value%", $catItem[$key], $sp);
+                    $spec .= $sp;
+                }
+            }
+            
+            $props = $this->getCatItemProperties($catItem["sID"], "CatItem", $structureMgr->getParentPageID($catItem["sID"]));
+            
+            $prop_list = "";
+            foreach($props as $prop)
+            {
+               if ($prop[3] && !$prop[4])
+               {
+                    $sp = $blocks["spec"];
+                    $sp = str_replace("%spec_name%", $prop[1], $sp);
+                    $sp = str_replace("%spec_value%", "$prop[3] $prop[2]", $sp);
+                    $spec .= $sp;
+               }
+            };
+
+
+            //DETAILS
+            $details = $structureMgr->getData($catItem["sID"]);
+            
+            if ($details)
+                $blocks["details"] = str_replace("%content%", $details, $blocks["details"]);
+            else
+                $blocks["details"] = "";
+
+
+            //ZOOM
+            if (file_exists(GetCfg("ROOT") . $catItem["PicturePath"] . "/" . $catItem["sID"] . "_3.jpg"))
+                $catItem["bigPicture"] = $catItem["PicturePath"] . "/" . $catItem["sID"] . "_3.jpg";
+            else
+                $catItem["bigPicture"] = "";
+
+            if ($catItem["bigPicture"])
+            {
+                $zoom = str_replace("%link%", $catItem["bigPicture"], $blocks["zoom"]);
+            }
+            else
+                $zoom = "";
+
+            if (file_exists(GetCfg("ROOT") . $catItem["PicturePath"] . "/" . $catItem["sID"] . "_2.jpg"))
+                $catItem["stdPicture"] = $catItem["PicturePath"] . "/" . $catItem["sID"] . "_2.jpg";
+            else
+            if (!isset($catItem["stdPicture"]) || !$catItem["stdPicture"])
+            {
+                $bigLogo = str_replace(".gif", "_2.gif", $catItem["logotype"]);
+                if ($catItem["logotype"] != NULL && file_exists(GetCfg("ROOT") . $bigLogo))
+                {
+                    $catItem["stdPicture"] = $bigLogo;
+                }
+                else
+                    $catItem["stdPicture"] = "/products/empty_2.gif";
+            }
+
+            /* !!!MAIN job here */
+            
+            if ($catItem["ptPercent"] == 0)
+                $firstPrice = "<strong>" . round($catItem["salePrice"] - ($catItem["salePrice"] * 5 / 100)) . "</strong>";
+            else
+                $firstPrice = "<strong><font color=\"#CC0033\">" . 
+                              round($catItem["salePrice"] - ($catItem["salePrice"] * $catItem["ptPercent"] / 100)) . 
+                              "</font></strong>";
+
+			$tpl = str_replace("%price%", "$firstPrice" . " / " . $catItem["salePrice"] . " руб.", $tpl);
+            
+            if($catItem['ptID'] == 8){
+	            $blocks["description"] = str_replace("%price%",  $catItem["salePrice"], $blocks["description"]);
+            }else{
+	            $blocks["description"] = str_replace("%price%",  "$firstPrice" . " / " . $catItem["salePrice"], $blocks["description"]);
+	        }
+            $blocks["description"] = str_replace("%spec%", $spec, $blocks["description"]);
+            $blocks["description"] = str_replace("%details%", $blocks["details"], $blocks["description"]);
+            $blocks["description"] = str_replace("%goodID%", $catItem["accID"], $blocks["description"]);
+
+            $blocks["picture"] = str_replace("%zoom%", $zoom, $blocks["picture"]);
+            $blocks["picture"] = str_replace("%image%", $catItem["stdPicture"], $blocks["picture"]);
+            $blocks["picture"] = str_replace("%good_name%", $catItem["ShortTitle"], $blocks["picture"]);
+            
+            $blocks["container"] = str_replace("%picture%", $blocks["picture"], $blocks["container"]);
+            $blocks["container"] = str_replace("%description%", $blocks["description"], $blocks["container"]);
+
+            return $blocks["container"];
+        }
+
+        function getCatItemByPageID($pageID)
+        {
+            if (!$pageID)
+                trigger_error("Invalid call - empty pageID", PM_FATAL);
+
+            $q = "
+                 SELECT accID, p.sID, ShortTitle, deliveryCode, accPlantName, logotype, smallPicture, p.tplID, salePrice, 
+                 MustUseCompatibility, PicturePath, DescriptionTemplate, ptPercent, pt.ptID 
+                 FROM `pm_as_parts` p
+                 LEFT JOIN pm_as_producer ap ON (ap.accPlantID = p.accPlantID)
+                 LEFT JOIN pm_structure s ON (p.sID = s.sID)
+                 LEFT JOIN pm_as_categories ac ON (s.pms_sID = ac.sID)
+                 LEFT JOIN pm_as_pricetypes pt ON (pt.ptID = p.ptID)
+                 WHERE s.sID = $pageID";
+            $qr = mysql_query($q);
+
+            if (!$qr)
+                trigger_error("Invaid query. " . mysql_error(), PM_FATAL);
+
+            if  (mysql_num_rows($qr) == 0)
+                trigger_error("Empty result for $q", PM_WARNING);
+
+            $res = mysql_fetch_assoc($qr);
+            if ($res["MustUseCompatibility"])
+            {
+                $res["Compatibility"] = "";
+                $q2 = "SELECT atc.carID, carModel, carName FROM pm_as_acc_to_cars atc LEFT JOIN pm_as_cars c ON (c.carID = atc.carID) 
+                WHERE accID=" . $res["accID"];
+                $qr2 = mysql_query($q2);
+
+                if (!$qr2)
+                    trigger_error("Error retrieving car model links [$q2] - " . mysql_error(), PM_FATAL);
+                
+                while (false !== (list($carID, $carModel, $carName) = mysql_fetch_row($qr2)))
+                {
+                    if ($res["Compatibility"])
+                        $res["Compatibility"] .= ", ";
+
+                    $res["Compatibility"] .= "$carModel";
+                    if ($carName)
+                        $res["Compatibility"] .= " $carName";
+                }
+            }
+
+            return $res;
+        }
+        
+        function getCatItemsByParentPageID($pageID, $carID, $producerID, &$catIDList, &$prodIDList)
+        {
+            if (!$pageID)
+                trigger_error("Invalid call - empty pageID", PM_FATAL);
+            
+            if (!$carID)
+                $wCarID = "";
+            else
+                $wCarID = " AND atc.carID=$carID";
+
+            if (!$producerID)
+                $wProducerID = "";
+            else
+                $wProducerID = " AND pr.accPlantID=$producerID";
+
+            if (count($prodIDList) > 0)
+            {
+                $wProducerID = " AND pr.accPlantID IN (";
+                for ($i=0; $i < count($prodIDList); $i++)
+                {
+                    if ($i)
+                        $wProducerID .= ", ";
+                    $wProducerID .= $prodIDList[$i];
+                }
+                $wProducerID .= ") ";
+            }
+
+            $wCatIDList = "";
+            $catOrder = "";
+            if (count($catIDList))
+            {
+                $wCatIDList = " AND s.pms_sID IN (";
+                for ($i = 0; $i < count($catIDList); $i++)
+                {
+                    if ($i)
+                        $wCatIDList .= ", ";
+                    $wCatIDList .= $catIDList[$i];
+                }
+                $wCatIDList .= ")";
+                $catOrder = "s.pms_sID, ";
+            }
+
+            $q = "SELECT s.sID
+FROM pm_as_parts p
+LEFT  JOIN pm_structure s ON ( p.sID = s.sID ) 
+LEFT  JOIN pm_as_acc_to_cars atc ON ( atc.accID = p.accID ) 
+LEFT  JOIN pm_as_producer pr ON ( p.accPlantID = pr.accPlantID ) 
+WHERE s.pms_sID=$pageID $wCarID $wProducerID $wCatIDList
+ORDER  BY $catOrder OrderNumber";
+            $qr = mysql_query($q);
+//            print $q . "<br>\n";
+
+            if (!$qr)
+                trigger_error("Invaid query. " . mysql_error(), PM_FATAL);
+
+            $res = array();
+
+            if  (mysql_num_rows($qr) == 0)
+            {
+//                trigger_error("Empty result for $q", PM_WARNING);
+                return $res;
+            }
+//            print mysql_num_rows($qr) . "<br>\n";
+            while (false !== (list ($sID) = mysql_fetch_row($qr)))
+            {
+                $res[$sID] = 1;
+            }
+
+            return $res;
+        }
+
+
+        function getDataListByPageID($args)
+        {
+            $pageID = $args[0];
+            if (!$pageID)
+                trigger_error("Invalid call - empty pageID", PM_FATAL);
+
+            $cols = $args[1];
+            if (count($cols) == 0)
+                return trigger_error("Invalid call - empty cols array", PM_FATAL);
+
+            $cl = "";
+            $join = "";
+            foreach($cols as $col)
+            {
+                if ($cl)
+                    $cl .= ", ";
+                $cl .= "$col";
+
+                if ($col == "accPlantName")
+                {
+                   $join .= " LEFT JOIN pm_as_producer pr ON (pr.accPlantID = p.accPlantID) ";
+                }
+            }
+
+            $q = "SELECT p.sID, $cl FROM pm_as_parts p LEFT JOIN pm_structure s ON (s.sID = p.sID) $join WHERE s.pms_sID = $pageID";
+            $qr = mysql_query($q);
+
+            if (!$qr)
+                trigger_error("error getting DataList for pageID=$pageID [$q] - " . mysql_error(), PM_FATAL);
+
+            $res = array();
+            while (false !== ($r = mysql_fetch_assoc($qr)))
+            {
+               $res[$r["sID"]] = $r;
+            }
+
+            return $res;
+        }
+            
+        function getProducers()
+        {
+            if (count($this->producers) == 0)
+            {
+                $q2 = "SELECT accPlantID, accPlantName FROM pm_as_producer WHERE accPlantID > 1 ORDER BY accPlantName";
+                $qr2 = mysql_query($q2);
+
+                if (!$qr2)
+                    trigger_error("Error retrieving producers - " . mysql_error(), PM_FATAL);
+                $this->producers[1] = "неизвестный";
+                    
+                while (false !== (list($aid, $an) = mysql_fetch_row($qr2)))
+                {
+                    $this->producers[$aid] = $an;
+                }
+            }
+
+            return $this->producers;
+        }
+
+
+        function getPriceTypes()
+        {
+            if (count($this->priceTypes) == 0)
+            {
+                $q2 = "SELECT ptID, CONCAT(ptName, ' (', ptPercent, '%)') FROM pm_as_pricetypes ORDER BY ptID";
+                $qr2 = mysql_query($q2);
+
+                if (!$qr2)
+                    trigger_error("Error retrieving priceTypes - " . mysql_error(), PM_FATAL);
+                    
+                while (false !== (list($ptid, $pn) = mysql_fetch_row($qr2)))
+                {
+                    $this->priceTypes[$ptid] = $pn;
+                }
+            }
+
+            return $this->priceTypes;
+        }
+    }
+?>

@@ -1,0 +1,16 @@
+<center>
+<table Border=1 CellSpacing=0 CellPadding=0 bordercolor=navy width=250><tr><td valign="top"><Table Border=1 CellSpacing=0 CellPadding=2 bordercolor=black width=250 bgcolor=#A2CAE1><Tr><Td Width=250 align=center style="font-size:12px;color:black;font-weight:bold;" bgcolor=#A2CAE1 colspan=2>
+%question%
+</td>
+</tr>
+<tr style="font-size:11px;color:black" bgcolor=#A2CAE1>
+<!--td align="left">
+%result%
+</td--> 
+<td valign=middle>
+<img border=0 src="%picture%" width="300" height="300">
+</td></tr>
+</table>
+</td>
+</tr>
+</table></center>

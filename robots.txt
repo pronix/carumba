@@ -1,0 +1,19 @@
+User-Agent: *
+Host: www.carumba.ru
+
+User-agent: Yandex
+User-agent: Googlebot
+Disallow: /*?print=1
+
+User-agent: psbot
+User-agent: gigabot
+User-agent: Twiceler
+Disallow: /
+
+User-agent: Yandex
+User-agent: Googlebot
+Disallow: /linksites
+
+User-agent: Yandex
+User-agent: Googlebot
+Disallow: /?searchtext # блокирует доступ к страницам начинающимся с /?searchtext

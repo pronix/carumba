@@ -1,0 +1,31 @@
+<form action="/admin?cmd=banner&act=save" method="post">
+<table border="0" width="100%">
+	<tr>
+		<td width="5%">id</td>
+		<td width="15%">Текст</td>
+		<td width="15%">Ссылка</td>
+		<td width="15%">Адрес картинки</td>
+		<td width="5%">Показов</td>
+		<td width="5%">Кликов</td>
+		<td width="5%">Активность</td>
+		<td width="10%">Редактировать</td>
+		<td width="10%">Удалить</td>
+	</tr>
+	%banners%
+	<tr>
+		<td width="5%"><INPUT TYPE="hidden" name="banID" value="%banID%" /><INPUT TYPE="text" NAME="param" value="%param%" /></td>
+		<td width="15%"><INPUT TYPE="text" NAME="text" value="%text%" /></td>
+		<td width="15%"><INPUT TYPE="text" NAME="link" value="%link%" /></td>
+		<td width="15%"><INPUT TYPE="text" NAME="url" value="%url%" /></td>
+		<td width="5%"><INPUT TYPE="checkbox" NAME="isactive" value="1" %isactive% /></td>
+		<td colspan="3"><INPUT TYPE="submit" /></td>
+	</tr>
+	<tr>
+		<td colspan=8>Ссылка для переадресации должна выглядеть следующим образом:<br />http://HOSTNAME/banner?param=IDVALUE<br />
+		HOSTNAME -  адрес сервера<br />
+		IDVALUE -  значение ID для банера<br />
+
+		</td>
+	</tr>
+</table>
+</form>

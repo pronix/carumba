@@ -1,0 +1,156 @@
+<form action="" method="post">
+<div class="podbor"><input class="input03" type="hidden" name="action" value="doVIN" />
+				 <table  style="width:100%;   padding:10px 10px 10px 10px;" cellspacing="0">
+                                <tr valign="top"> 
+                                  <td style="width:40%; "><p><strong>Марка Вашего автомобиля:</strong></p>
+                                    <table  style="width:100%;" cellpadding="10" cellspacing="0">
+                                      <tr align="center"> 
+                                        <td> <img src="/products/toyota.gif" alt="Toyota" width="70" height="70" /><br />
+                                          Toyota<br /> <input type="radio" name="brand" value="Toyota" checked="checked" /> 
+                                        </td>
+                                        <td> <img src="/products/lexus.gif" alt="Lexus" width="70" height="70" /><br />
+                                          Lexus<br /> <input type="radio" name="brand" value="Lexus" /> 
+                                        </td>
+                                      </tr>
+                                      <tr align="center"> 
+                                        <td> <img src="/products/nissan.gif" alt="Nissan" width="70" height="70" /><br />
+                                          Nissan<br /> <input type="radio" name="brand" value="Nissan" /> 
+                                        </td>
+                                        <td> <img src="/products/infiniti.gif" alt="Infiniti" width="70" height="70" /><br />
+                                          Infiniti<br /> <input type="radio" name="brand" value="Infiniti" /> 
+                                        </td>
+                                      </tr>
+                                      <tr align="center"> 
+                                        <td> <img src="/products/mazda.gif" alt="Mazda" width="70" height="70" /><br />
+                                          Mazda<br /> <input type="radio" name="brand" value="Mazda" /> 
+                                        </td>
+                                        <td><img src="/products/mitsubishi.gif" alt="Mitsubishi" width="70" height="70" /><br />
+                                          Mitsubishi<br /> <input type="radio" name="brand" value="Mitsubishi" /> 
+                                        </td>
+                                      </tr>
+                                      <tr align="center"> 
+                                        <td><img src="/products/honda.gif" alt="Honda" width="70" height="70"  /><br />
+                                          Honda<br /> <input type="radio" name="brand" value="Honda" /> 
+                                        </td>
+                                        <td><img src="/products/subaru.gif" alt="Subaru" width="70" height="70"  /><br />
+                                          Subaru<br /> <input type="radio" name="brand" value="Subaru" />
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    
+                                  </td>
+                                  <td style="width:50%; "><p><strong>Подбор по VIN:</strong></p>
+                                    <table  border="0" style="width:100%;"  cellpadding="5" cellspacing="1" bgcolor="#CCCCCC">
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Модель:</td>
+                                        <td><input name="model" type="text" class="input03" /></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Руль:</td>
+                                        <td><select name="wheel" class="input03">
+                                            <option>Левый</option>
+                                            <option>Правый</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Год выпуска:</td>
+                                        <td><select name="year" class="input03">
+                                            <option value="">Выбрать</option>
+                                            <option>2006</option>
+                                            <option>2005</option>
+                                            <option>2004</option>
+                                            <option>2003</option>
+                                            <option>2002</option>
+                                            <option>2001</option>
+                                            <option>2000</option>
+                                            <option>1999</option>
+                                            <option>1998</option>
+                                            <option>1997</option>
+                                            <option>1996</option>
+                                            <option>1995</option>
+                                            <option>1994</option>
+                                            <option>1993</option>
+                                            <option>1992</option>
+                                            <option>1991</option>
+                                            <option>1990</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">VIN (17 
+                                           ):</td>
+                                        <td><input name="VIN" type="text" class="input03" /></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Объем и тип двигателя:</td>
+                                        <td><input name="engine" type="text" class="input03" /></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Тип кузова:</td>
+                                        <td><select name="kuzov" class="input03">
+                                            <option value="">Выбрать</option>
+                                            <option>Седан</option>
+                                            <option>Хэтчбэк</option>
+                                            <option>Универсал</option>
+                                            <option>Джип</option>
+                                            <option>Купе</option>
+                                            <option>Кабриолет</option>
+                                            <option>Минивэн</option>
+                                            <option>Микроавтобус</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Тип КПП:</td>
+                                        <td><select name="kpp" class="input03">
+                                            <option value="">Выбрать</option>
+                                            <option>Механическая</option>
+                                            <option>Автомат</option>
+                                            <option>Вариатор</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Привод:</td>
+                                        <td><select name="privod" class="input03">
+                                            <option value="">Выбрать</option>
+                                            <option>Передний</option>
+                                            <option>Задний</option>
+                                            <option>Полный</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">ABS:</td>
+                                        <td><input type="checkbox" name="abs" value="1" /></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Кондиционер:</td>
+                                        <td><input type="checkbox" name="condition" value="1" /></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Наименование интересующих 
+                                          запчастей:</td>
+                                        <td><textarea name="parts_list" class="input05"></textarea></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td align="right">Прозводитель:</td>
+                                        <td><p> 
+                                            Оригинальные:<input type="checkbox" name="original" value="1" />
+                                                        <br />
+                                            Неоригинальные:<input type="checkbox" name="nonoriginal" value="1" />
+                                                          </p></td>
+                                      </tr>
+                                    </table>
+                              <br />%send%
+
+                            </td>
+                          </tr>
+                        </table></div>
+						</form>
+						<div class="blokinfo"> 
+  <p><strong>Теперь подобрать товар стало очень просто:</strong></p>
+<ul>
+  <li> Отметьте галочками интересующих Вас производителей</li>
+  <li>Отметьте галочками интересующие Вас категории</li>
+  <li>Нажмите на кнопку "подобрать" </li>
+</ul>
+
+
+</div>

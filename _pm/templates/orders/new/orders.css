@@ -1,0 +1,33 @@
+body, td{padding:5px; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 11px; font-weight: normal;color: #343434;}
+img {border:0;}
+
+a {color: #235EA7; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 11px; font-weight: normal; text-decoration: underline;}
+a:hover  {color: #E90939; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 11px; font-weight: normal; text-decoration: underline;}
+
+.tblup {border: 1px solid #D1D3D9;
+
+}
+
+.tbl {}
+.tbl td{
+	vertical-align: top;
+
+}
+
+.tbl .today{
+	border: 2px solid #FFC2CF;
+
+}
+
+.tblin {
+
+}
+.tblin td{
+	text-align: center;
+	vertical-align: middle;
+
+}
+
+.widesel   {width: 99%; height: 15px; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 11px; color: #343434; border: 1px solid #D1D3D9;vertical-align:middle;}
+.widesel2   {width: 99%; height: 100px; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 11px; color: #343434; border: 1px solid #D1D3D9;vertical-align:middle;}
+.input02      {width: 40px; height: 17px; color: #343434; border: 1px solid #D1D3D9;font-size: 11px; font-weight: normal;color: #343434;font-family: Tahoma, Verdana, Arial, sans-serif;}

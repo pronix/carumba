@@ -1,0 +1,24 @@
+<table class="tblup" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr>
+    <td width="202"><img src="/images/carumba2.gif" height="44" width="202"></td>
+    <td><table class="tblin" bgcolor="#ffffff" border="0" cellpadding="5" cellspacing="5" height="44" width="100%">
+        <tbody><tr bgcolor="#dbdbdb"> 
+        {foreach from=$menu item=m}
+            <td width="25%">
+            {if $topic.name == $m.url}
+                <strong>{$m.name}</strong><br>
+            {else}
+                <a href="/task/{$m.url}/">{$m.name}</a><br>
+            {/if}
+                {$m.count} 
+            {if $m.newcount}    
+                (<strong>+{$m.newcount}</strong>)
+            {/if}
+            </td>
+        {/foreach}        
+         </tr>
+      </tbody></table></td>
+  </tr>
+</tbody></table>
+<br>
+

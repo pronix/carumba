@@ -1,0 +1,26 @@
+   <div class="anketa">{error}
+   <form method="POST" action="">
+   <input type="hidden" name="comment[sID]" value="{sID}" />
+<table  border="0" cellspacing="0" cellpadding="0" class="both">
+  <tr>
+    <td class="left"><strong>Имя</strong>*:<br />
+    <input name="comment[Name]" type="text" class="cinput01" value="{name}" /><br /><br />
+	<strong>E-mail</strong>:<br />
+	<input name="comment[Email]" type="text" class="cinput01" value="{email}" /><br /><br />
+	<strong>Введите код</strong>*:<br />
+	<img src="/ajax/comments_code.php?num={code}" style="vertical-align: middle;" />
+	<img src="/images/arr_comment.gif" style="vertical-align: middle;" />
+	<input name="comment[Code]" type="text" maxlength="4" class="cinput02" /><br /><br />
+	<input src="/images/comment.gif" type="image" id="sendComments">
+	
+	</td>
+    <td class="right"><strong>Ваш комментарий</strong>*:<br />
+    <textarea name="comment[Text]" class="cinput03">{text}</textarea><br />
+	
+	</td>
+  </tr>
+</table>
+</form>
+   </div>
+
+   {comments}

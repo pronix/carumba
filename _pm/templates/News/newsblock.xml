@@ -1,0 +1,12 @@
+<container>
+<div id="nws">Новости:</div>
+		  	<div class="blok">
+                      %items%
+					  <a href="/carumba/news" class="link"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" /> Все новости компании</a>
+			</div>
+</container>
+
+<item>
+		<img src="/images/nws.gif" width="8" height="9"  alt="" />&nbsp;%date%<br />
+		<a href="%news_link%">%short_title%</a><br /><br />
+</item>

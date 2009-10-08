@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="ru">
+<head>
+  <container type="inline" id="Head" />
+  <link href="/css/carumba.css" rel="stylesheet" type="text/css" />
+    <link href="/rss.xml" rel="alternate" type="application/rss+xml" title="Carumba - предложения по распродаже:" />
+  <script type="text/javascript" src="/js/carumba.js"></script>
+  <meta http-equiv="content-type" content="text/html;charset=windows-1251" />
+</head>
+<body>
+  <div id="out">
+
+    <div id="top">
+      <div class="content">
+	  
+							    <div class="upup">
+
+											<div class="text">
+												Авто запчасти, Запчасти ВАЗ,  Заказ по VIN для Японских авто, Масла, Шины, Автосигнализации, Автозвук
+											</div>
+									
+									<div class="fav">
+										<a href="#" onclick="window.external.AddFavorite('http://www.carumba.ru/','Интернет-магазин авто-запчастей Карумба г. Санкт-Петербург');"> Добавить в избранное</a>
+									</div>
+
+								</div>
+      <table cellspacing="0" cellpadding="0" class="upmid ">
+        <tr>
+          <td class="left"><a href="/"><img src="/images/up_carumba.gif"  alt="Интернет-магазин авто-запчастей Карумба г. Санкт-Петербург" width="315" height="115" /></a></td>
+          <td class="mid">&nbsp;</td>
+          <td class="right"><img src="/images/up_car.gif" width="245" height="115"  alt="" /></td>
+        </tr>
+      </table>
+
+	  
+	  </div>
+    </div>
+
+
+    <table id="main" cellspacing="0" cellpadding="0">
+		<tr>
+			<td id="left">
+				<div class="content">
+
+				  <div id="cat">Каталог:</div>
+					<container id="MainMenu" depth="1" expanded="0" rootid="3" template="leftmenu2.xml" />
+				  <div class="fix"><a href="#"></a></div>
+				  <container id="Authentication" template="auth.xml" module="_service" function="authBlock" />
+				  <div class="shadowg"></div>
+	  
+
+	  
+				  <div id="club">Автоклуб:</div>
+				  
+					<container id="MainMenu" depth="1" rootid="2" template="leftmenu3.xml" />
+					
+					<div id="icq">Консультант:</div>
+					<div class="blok">
+					   ICQ-консультант по подбору запчастей:<br />
+						<img src="/images/icq.gif" style="vertical-align: middle;" height="18" width="18" alt="251-600-094" /> <a href="http://wwp.icq.com/scripts/contact.dll?msgto=251600094">251-600-094</a><br />
+					   ICQ-консультант по работе интернет-магазина:<br />
+						<img src="/images/icq.gif" style="vertical-align: middle;" height="18" width="18" alt="215-162-650" /> <a href="http://wwp.icq.com/scripts/contact.dll?msgto=215162650">215-162-650</a>
+					   </div>
+					<div class="shadowg"></div>
+
+
+					<div id="subscribe">Рассылка:</div>
+					<container id="Mail" module="Profile" function="subscribeBlock" />
+					  <div class="shadowg"></div>
+
+				</div>
+			</td>
+			<td id="centrcontents">
+				<div class="content">
+			<container id="TopMenu" template="navibar.xml" />	
+			 
+
+			 <table class="headertable" cellpadding="0" cellspacing="0">
+                    <tr> 
+                      <td class="nnov_01"><img src="/images/pix.gif" width="10" height="8"  alt="" /></td>
+                      <td class="nnov_02"></td>
+                      <td class="nnov_03"><img src="/images/pix.gif" width="10" height="8"  alt="" /></td>
+                    </tr>
+                    <tr> 
+                      <td class="nnov_04"></td>
+                      <td class="header"><h1><container id="MainTitle" module="_service" function="getPageTitle" /></h1></td>
+                      <td class="nnov_05"></td>
+                    </tr>
+                    <tr> 
+                      <td class="nnov_06"></td>
+                      <td class="nnov_07"></td>
+                      <td class="nnov_08"></td>
+                    </tr>
+           </table>
+
+<container id="MainContent" type="MainContent" />
+
+
+				</div>
+<div class="rasporka"><img src="/images/pix.gif" width="600" height="1"  alt="" /></div>
+			</td>
+			<td id="right">
+				<div class="content">
+					<container id="Cart" module="Cart" function="cartBlock" template="cartblock.xml" />
+					<a href="/main/club"><img src="/images/club.gif" width="175" height="98"  alt="Автоклуб КАРУМБА (скидки, бонусы)" /></a><br />
+
+					<div id="vote">Голосование:</div>
+					<div class="blok">
+						<container id="Vote" module="Vote" function="getBlock"/>	
+					</div>
+					<div class="shadoww"></div>
+
+					<container id="Banner" module="Banner" function="getBlock"/>
+			
+					<container id="RightNews" module="News" function="newsBlock" newsCount="3" newsLineID="23" template="newsblock.xml" />
+					<div class="shadoww"></div>
+
+				</div>
+
+			</td>
+		</tr>
+    </table>
+
+
+  </div>
+  <div id="bottom">
+    <div class="content">
+	2006 &copy КАРУМБА - Автозапчасти Санкт-Петербурга, интернет-магазин.
+<container id="TopMenu" depth="1" expanded="0" rootid="22" template="topmenu1.xml" />	
+	      <div class="search">
+		 <form action="/search" method="get" accept-charset="windows-1251"><p>
+			 <input type="text" name="searchtext" class="input01" value=" Поиск" onblur="writeVal(this, ' Поиск'); return false;" onfocus="clearVal(this, ' Поиск'); return false;" />
+			 <input type="image" src="/images/search_butt.gif" class="search_butt" alt="Искать" /></p>
+			</form>
+		</div>
+	
+	<br />
+	Использование любых материалов без разрешения владельцев сайта запрещено.
+	<script type="text/javascript" src="/js/counter.js"></script>
+	<noscript><img src="http://www.carumba.ru/stat/cntg.php?468&amp;c=0" width="1" height="1" alt=""/></noscript>
+	</div>
+	
+
+  </div>
+</body>
+</html>

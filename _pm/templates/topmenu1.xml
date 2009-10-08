@@ -1,0 +1,19 @@
+<type>HorizontalTabs</type>
+<menu level="1">
+	<item active="1">
+                <td class="ina">%text%</td>
+	</item>
+	<item active="0">
+                <td class="in"><a href="%link%">%text%</a></td>
+	</item>
+	<separator><td class="out">&nbsp;</td></separator>
+	<container>
+	<div class="upmenu">
+	<table cellspacing="0" cellpadding="0" class="upmenutable">
+  		<tr>
+%items%
+  		</tr>
+	</table>
+	</div>
+	</container>
+</menu>

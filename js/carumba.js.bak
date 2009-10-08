@@ -1,0 +1,39 @@
+function clearVal(obj,title){
+	if(obj.value==title){
+		obj.value='';
+	}
+}
+
+function writeVal(obj,title){
+	if(obj.value==''){
+		obj.value=title;
+	}
+}
+
+function showCatForCar(carID)
+{
+	var c = document.getElementById(carID);
+	if (c)
+	{
+		for (var i=0; i <= $carCount; i++)
+		{
+			var d = document.getElementById('catForCar' + i);
+			if (d) {
+				d.style.display = \"none\";
+			}
+		}
+		c.style.display = \"block\";
+	}
+	return true;
+}
+
+function setNullFilter()
+{
+	var filterForm = document.getElementById("filterForm");
+	filterForm.from.value='';
+	filterForm.to.value='';
+	if(filterForm.propID != null) {
+		filterForm.propID.selectedIndex = 0;
+	}
+	filterForm.submit();
+}

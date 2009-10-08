@@ -1,0 +1,61 @@
+<form method="POST" action="">
+<center>
+{message}
+<input type="hidden" name="links_send" value="1" />
+<table bgcolor="#c6c6c6" border="0" cellpadding="5" cellspacing="1" align="center">
+  <tbody>
+  <tr bgcolor="#ffffff">
+    <td width="150" style="padding:5px;"> URL *:<br />
+         (вместе с http://)</td>
+    <td>
+      <input name="links_url" class="link_input" type="text" value="{url}">
+      </td>
+  </tr>
+  <tr bgcolor="#f6f6f6">
+    <td style="padding:5px;"> Название *:<br />
+        (не более 100 символов)</td>
+    <td>
+      <input name="links_title" class="link_input" type="text" value="{title}">
+      </td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="120" style="padding:5px;"> Категория *:</td>
+    <td>
+      <select name="links_cat" class="link_select">
+      {options}
+      </select>
+      </td>
+  </tr>
+  <tr bgcolor="#f6f6f6">
+    <td style="padding:5px;"> Страница со ссылкой *:<br />
+         (вместе с http://)</td>
+    <td>
+      <input name="links_referer" class="link_input" type="text" value="{referer}">
+      </td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td style="padding:5px;"> Email *:</td>
+    <td>
+      <input name="links_email" class="link_input" type="text" value="{email}">
+      </td>
+  </tr>
+  <tr bgcolor="#f6f6f6">
+    <td style="padding:5px;"> Защитный код
+        <img src="/ajax/comments_code.php?num={code}" /> *:</td>
+    <td>
+      <input name="links_code" class="link_input" type="text" maxlength="4" value="">
+      </td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td style="padding:5px;"> Описание *:<br />
+        (не более 200 символов)</td>
+    <td><textarea name="links_text" rows="5" type="text" class="link_input">{text}</textarea></td>
+  </tr>
+  <tr bgcolor="#dbdbdb">
+    <td colspan="2" align="center"><input type="submit" value="Добавить" class="link_button"> |
+    <input type="reset" value="Очистить" class="link_button">
+    </td>
+  </tr>
+</tbody></table>
+</center>
+</form>

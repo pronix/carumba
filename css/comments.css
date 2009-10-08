@@ -1,0 +1,51 @@
+.cinput01 {
+    width: 125px; 
+    height: 17px; 
+    color: #343434; 
+    border: 1px solid #D1D3D9; 
+    vertical-align:middle;
+}
+.cinput02 {
+    width: 67px; 
+    height: 17px; 
+    color: #343434; 
+    border: 1px solid #D1D3D9;
+}
+.cinput03 {
+    width: 99%; 
+    height: 140px; 
+    font-size: 11px; 
+    color: #5B5B5B; 
+    border: 1px solid #D1D3D9;
+    font:normal 11px Tahoma,sans-serif;
+}
+
+/*************************************************/
+
+.content{
+	padding-right: 10px; 
+	padding-left: 10px; 
+	padding-bottom: 10px; 
+	padding-top: 0px;
+}
+
+.anketa{
+
+	padding:10px 10px 10px 10px; 
+	margin:0px 10px 10px 10px;
+	background-color: #F2F2F2;
+	border:1px solid #DCDDE0;
+	vertical-align: top;
+}
+
+.anketa .both             {width:100%;}
+.anketa .both .left      {width:148px; vertical-align:top;}
+.anketa .both .right  {vertical-align:top;}
+
+.comment{
+	padding:10px 10px 10px 10px; 
+	margin:0px 10px 10px 10px;
+	background-color: #FFF;
+	border:1px solid #DCDDE0;
+	vertical-align: top;
+}

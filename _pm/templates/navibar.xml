@@ -1,0 +1,12 @@
+<type>NavigationalBar</type>
+
+<menu level="1">
+	<item active="1">%text%
+	</item>
+	<item active="0"><a href="%link%">%text%</a>
+	</item>
+	<separator> / </separator>
+	<container>
+	<div class="navibar">%items%</div>
+	</container>
+</menu>

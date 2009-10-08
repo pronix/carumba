@@ -1,0 +1,28 @@
+<block authenticated="0">
+	  <div id="autor">Авторизация:</div>
+      <div class="blok">
+                        <form action="/" method="post">
+						<p>
+                        <input type="hidden" name="cmd" value="login" />
+                        <input type="hidden" name="redirectURL" value="%currentpath%" />
+<input name="login" type="text" class="input01" value="Логин"  onblur="writeVal(this, 'Логин'); return false;" onfocus="clearVal(this, 'Логин'); return false;" />
+<input name="psw" type="password" class="input01" value="Пароль" onblur="writeVal(this, 'Пароль'); return false;" onfocus="clearVal(this, 'Пароль'); return false;"/>
+<input type="image" src="/images/butt_ok.gif" class="ok_butt" alt="ok"  />
+						</p>
+                        </form>
+	<a href="/registration"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" />Зарегистрироваться</a><br />
+	<a href="/lostpassword"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" />Забыли пароль?</a>
+      </div>
+</block>
+
+<block authenticated="1">
+	  <div id="autor">Авторизация:</div>
+      <div class="blok">
+Здравствуйте,<br />
+<strong>%username%</strong>.<br /><br />
+%carInfo%<br />
+<a href="/profile/"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" />Ваш профайл</a><br />
+<a href="/?cmd=logout"><img src="/images/arr_gray2.gif" width="7" height="9"  alt="" />Выход (log out) </a>
+
+      </div>
+</block>
