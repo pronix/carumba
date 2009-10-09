@@ -208,6 +208,26 @@ function processAdminCommand($cmd, $pageID)
 			
 			break;
 		}
+        
+        case "actCar" : {
+            $pms_sID    = _get('pms_sID');
+            $ModuleName = _get('ModuleName');
+            $DataType   = _get('DataType');
+            $refCmd     = _get('refCmd');
+            $cmd        = _get('cmd');
+            $act        = _get('act');
+            switch ($act){
+                case 'del':
+                    $carID = _get('carID');
+                    delCar($carID, $pms_sID, $ModuleName, $DataType, $refCmd);
+                    break;
+                case 'add':
+                    $carName = _get('carName');
+                    addCar($carName, $pms_sID, $ModuleName, $DataType, $refCmd);
+                    break;
+            }
+            break;
+        }
 		
         default:
         {
@@ -568,10 +588,9 @@ function updateChildren()
 function renderProperties(&$eVars)
 {
     $specificLines = "";
-
+    
     foreach($eVars as $k => $v)
     {
-                                   
         $specificLines .= "<tr><td valign=top>$v[0]</td><td>"; 
         switch ($v[1])
         {
@@ -617,9 +636,14 @@ function renderProperties(&$eVars)
             case "checkbox_list":
             {
                 $nextBR = 0;
-                
-                $chLines = "";
+                $pageID     = _get('pageID');
+                $ModuleName = _get('ModuleName');
+                $DataType   = _get('DataType');
+                $refCmd     = _get('cmd');
 
+                $jsText = "<script> function delCar(carID, carName) {if (confirm('При удалении совместимость с этой маркой будет удалена у всех товаров. Удалить '+carName+'?')) { window.location='/carumba/admin/?cmd=actCar&act=del&carID='+carID+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} } function addCar() {var carName = document.getElementById('carName').value; if (carName == '') {alert('Название марки не заполнено!'); return false;} if (confirm('Добавить новую марку авто '+carName+'?')) { window.location='/carumba/admin/?cmd=actCar&act=add&carName='+carName+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} }</script>";
+                //$jsText = "<script>function delCar() {return false;}</script>";
+                $chLines = "";
                 foreach($v[3] as $carID => $carModel)
                 {
                     if ($nextBR == $v[4])
@@ -635,10 +659,12 @@ function renderProperties(&$eVars)
                     $chLines .= "<td><input name=car_$carID value=1 type=checkbox";
                     if (isset($v[2][$carID]))
                         $chLines .= " checked";
-                    $chLines .= ">$carModel</td>\n";
+                    $chLines .= ">$carModel&nbsp;<a onclick=\"return delCar($carID,'$carModel');\" href=\"#\"><font color=red><img border=0 alt=\"Удалить\" src=\"/images/del_car.gif\"></font></a></td>\n";
                 }
+                $specificLines .= $jsText;
                 if ($chLines)
                     $specificLines .= "<table><tr>$chLines</tr></table>\n";
+                $specificLines .= "<input type=\"text\" name=\"carName\" id=\"carName\"/>&nbsp;<input onclick=\"return addCar()\" type=\"button\" value=\"Добавить марку\" />";
                 break;
             }
         }
@@ -1029,7 +1055,6 @@ function editPage($pageID)
         $specDesc = $modulesMgr->execute(_var('ModuleName'), 'getSpecificBlockDesc', array(_var('DataType')), false);
         
         $eVars = $modulesMgr->execute(_var("ModuleName"), "getSpecificDataForEditing", array(-1, _var("DataType"), _var("pageID")), false);
-
         $header = "Добавление " . $dt[2];
         $title = "Общие сведения";
         $mtags = "Мета-теги";
@@ -1041,7 +1066,6 @@ function editPage($pageID)
 //    $fromPost = array("ShortTitle", "Title", "URLName", "MetaDesc", "MetaKeywords", "isHidden", "Content");
 
     $specificLines = renderProperties(&$eVars);
-
 
     $active_color = "#DEEBFA";
     $back_color = "#EEFBFF";
@@ -1739,6 +1763,35 @@ function admMenu($cmd)
     $t = str_replace('%items%', $amItems, $t);
     
     return $t;
+}
+
+function delCar($carID, $pms_sID, $ModuleName, $DataType, $refCmd){
+    $carID = (int) $carID;
+    mysql_query ("DELETE FROM pm_as_acc_to_cars WHERE carID='$carID'");
+    mysql_query ("DELETE FROM pm_as_cars WHERE carID='$carID'");
+    $get = "";
+    if (! empty($ModuleName)) $get.="&ModuleName=$ModuleName";
+    if (! empty($DataType)) $get.="&DataType=$DataType";
+    if (! empty($refCmd)) $get.="&cmd=$refCmd";
+    header("Location: /admin/?pageID=$pms_sID".$get);
+    exit;
+}
+
+function addCar($carName, $pms_sID, $ModuleName, $DataType, $refCmd){
+    global $structureMgr;
+    $carName = mysql_escape_string(trim($carName));
+    $pms_sID = (int) $pms_sID;
+    if (! empty($carName)) {
+        if ($structureMgr->getFindPageID($pms_sID, false, 4)) $plantID = 2;
+        else $plantID = 4;
+        mysql_query("INSERT INTO pm_as_cars (plantID, carModel) VALUES('$plantID', '$carName')");
+    }
+    $get = "";
+    if (! empty($ModuleName)) $get.="&ModuleName=$ModuleName";
+    if (! empty($DataType)) $get.="&DataType=$DataType";
+    if (! empty($refCmd)) $get.="&cmd=$refCmd";
+    header("Location: /admin/?pageID=$pms_sID".$get);
+    exit;
 }
 
 ?>  

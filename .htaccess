@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^carumba.ru$ [NC] 
+RewriteRule ^(.*)$ http://www.carumba.ru/$1 [R=301,L]  
+
+RewriteCond %{REQUEST_URI} !((^/links)|(^/comments)|(^/ajax)|(delGood.php)|(importShina.php)|(^/task)|(^/typeInDB.php)|(^/pic.php)|(^/small_image.php)|(^/image.php)|(^/ref.php)|(^/favicon.ico)|(^/images)|(^/pics)|(^/design)|(^/stat)|(^/products)|(^/js)|(^/css)|(^/js)|(^/index2.php)|(^/robots.txt)|(^/_sql)|(^/rss.xml)|(^/newsgrabber/)|(^/temp/)|(^/twist/))
+
+RewriteRule ^.*$ /index2.php [L]
+AddType image/x-icon .ico
