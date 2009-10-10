@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Час створення: Жов 10 2009 р., 16:41
+-- Час створення: Жов 10 2009 р., 16:53
 -- Версія сервера: 5.0.45
 -- Версія PHP: 5.2.4
 
@@ -12,25 +12,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- БД: `carumba`
 --
-
--- --------------------------------------------------------
-
---
--- Структура таблиці `pm_as_categories`
---
-
-CREATE TABLE IF NOT EXISTS `pm_as_categories` (
-  `accCatID` int(11) NOT NULL auto_increment,
-  `sID` int(11) NOT NULL default '0',
-  `sortType` varchar(64) NOT NULL default '',
-  `MustUseCompatibility` tinyint(4) NOT NULL default '0',
-  `PicturePath` varchar(255) NOT NULL default '',
-  `DescriptionTemplate` varchar(255) NOT NULL default '',
-  `FilterTemplate` varchar(255) NOT NULL default 'std_select.html',
-  PRIMARY KEY  (`accCatID`),
-  KEY `pm_structure_FK` (`sID`),
-  KEY `DescriptionTemplate` (`DescriptionTemplate`)
-) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=196 ;
 
 --
 -- Дамп даних таблиці `pm_as_categories`
@@ -221,4 +202,5 @@ INSERT INTO `pm_as_categories` (`accCatID`, `sID`, `sortType`, `MustUseCompatibi
 (192, 7636, '', 1, '/products/accessories-foreigner', 'details1.xml', 'std_select.html'),
 (193, 8089, '', 0, '/products/accumulator', 'details1.xml', 'oils_select.html'),
 (194, 8098, '', 0, '/products/devices', 'details1.xml', 'std_select.html'),
-(195, 8143, '', 0, '/products/accessories', 'details1.xml', 'std_select.html');
+(195, 8143, '', 0, '/products/accessories', 'details1.xml', 'std_select.html'),
+(196, 8178, '', 0, '/products/tuning-foreign', 'details1.xml', 'std_select.html');
