@@ -406,10 +406,8 @@
                                 $carLinks[$carID] = "1";
                             }
                         }
-
                         $sData["carLinks"] = array("Ñמגלוסעטלמסעü", "checkbox_list", $carLinks, $cars, 3);
                     }
-
                     return $sData;
                     break;
             }
@@ -1038,10 +1036,9 @@
                 $carCount = count($cars);
 
                 //script to switch layers with categories that match the concrete car
-                $carlist = "<table width='100%'><tr><td>";
-
-
-                $carlist .= "<input type=\"radio\" name=\"carID\" value=\"0\" checked=\"checked\" onclick=\"showCatForCar('catForCar0', '".count($cars)."');\" /> <a class=\"levm\" href=\"?carID=0\">גסו</a><br />\n";
+                $jsText = "<script>var tempCarID = 'catForCar0'; </script>";
+                $carlist = $jsText . "<table width='100%'><tr><td>";
+                $carlist .= "<input type=\"radio\" name=\"carID\" value=\"0\" checked=\"checked\" onclick=\"showCatForCar('catForCar0');\" /> <a class=\"levm\" href=\"?carID=0\">גסו</a><br />\n";
 
                 $catsForCar = "";
 
@@ -1060,7 +1057,7 @@
                     $URL = "?carID=$carID";
                     $add = "";
                     if ($plantID == 2) $add = $car[0] . " ";
-                    $carlist .= "<input type=\"radio\" name=\"carID\" value=\"$carID\" onclick=\"showCatForCar('catForCar$carID', '".count($cars)."');\" /> <a class=\"levm\" href=\"$URL\">" .  $add . $car[1] . "</a><br/>\n";
+                    $carlist .= "<input type=\"radio\" name=\"carID\" value=\"$carID\" onclick=\"showCatForCar('catForCar$carID');\" /> <a class=\"levm\" href=\"$URL\">" .  $add . $car[1] . "</a><br/>\n";
                     $i++;
                     if ($i == 17) $carlist .= "</td><td>";
                     $catsForCar .= "<div style=\"display: none;\" id=\"catForCar$carID\">";

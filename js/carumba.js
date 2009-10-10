@@ -10,20 +10,18 @@ function writeVal(obj,title){
 	}
 }
 
-function showCatForCar(carID, carCount)
+function showCatForCar(carID)
 {
 	var c = document.getElementById(carID);
 	if (c)
 	{
-		for (var i=0; i <= carCount; i++)
-		{
-			var d = document.getElementById('catForCar' + i);
-			if (d) {
-				d.style.display = "none";
-			}
+		var d = document.getElementById(tempCarID);
+		if (d) {
+			d.style.display = "none";
 		}
 		c.style.display = "block";
 	}
+	tempCarID = carID;
 	return true;
 }
 
