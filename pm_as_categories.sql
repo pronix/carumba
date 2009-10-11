@@ -203,4 +203,4 @@ INSERT INTO `pm_as_categories` (`accCatID`, `sID`, `sortType`, `MustUseCompatibi
 (193, 8089, '', 0, '/products/accumulator', 'details1.xml', 'oils_select.html'),
 (194, 8098, '', 0, '/products/devices', 'details1.xml', 'std_select.html'),
 (195, 8143, '', 0, '/products/accessories', 'details1.xml', 'std_select.html'),
-(196, 8178, '', 0, '/products/tuning-foreign', 'details1.xml', 'std_select.html');
+(196, 8178, '', 1, '/products/tuning-foreign', 'details1.xml', 'std_select.html');

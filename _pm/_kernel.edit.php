@@ -1778,12 +1778,12 @@ function delCar($carID, $pms_sID, $ModuleName, $DataType, $refCmd){
 }
 
 function addCar($carName, $pms_sID, $ModuleName, $DataType, $refCmd){
-    global $structureMgr;
+    global $structureMgr, $modulesMgr;
     $carName = mysql_escape_string(trim($carName));
     $pms_sID = (int) $pms_sID;
     if (! empty($carName)) {
-        if ($structureMgr->getFindPageID($pms_sID, false, 4)) $plantID = 2;
-        else $plantID = 4;
+        $catalogID =  $structureMgr->getParentPageID($structureMgr->getParentPageID($pms_sID));
+        $plantID = $modulesMgr->execute("Catalogue", "getCarPlantByPageID", array($catalogID), false);
         mysql_query("INSERT INTO pm_as_cars (plantID, carModel) VALUES('$plantID', '$carName')");
     }
     $get = "";

@@ -177,7 +177,8 @@
                                            'getSpecificBlockDesc',
                                            'getAdditionalColumns',
                                            'updateAdditionalColumns',
-                                           'getDataListByPageID'
+                                           'getDataListByPageID',
+                                           'getCarPlantByPageID'
                                          );
             $this->producers = array();
             $this->priceTypes = array();
@@ -370,13 +371,7 @@
                         }
                         
                         
-                        if ($structureMgr->getFindPageID($ida, false, 4))
-                        {
-                            $plantID = 2;
-                        } else
-                        {
-                            $plantID = 4;    
-                        }
+                        $plantID = $this->getCarPlantByPageID(array($ida));
                         
                         $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID) WHERE c.plantID=".$plantID;
                         $qr2 = mysql_query($q2);
@@ -1025,13 +1020,7 @@
             //We need to generate cars list
             if ($sData["MustUseCompatibility"][2])
             {                    
-                if ($pageID == 4)
-                {
-                    $plantID = 2;
-                } else
-                {
-                    $plantID = 4;    
-                }                           
+                $plantID = $this->getCarPlantByPageID(array($pageID));
                 $cars = $this->getCarsList($plantID);
                 $carCount = count($cars);
 
@@ -2606,6 +2595,17 @@ ORDER  BY $catOrder OrderNumber";
             }
 
             return $this->priceTypes;
+        }
+        
+        function getCarPlantByPageID ($args)
+        {
+            global $structureMgr;
+            // sIDs and plantIDs hardcoded
+            $pageID = $args[0];
+            if ($structureMgr->getFindPageID($pageID, false, 4)) $plantID = 2;
+            elseif ($structureMgr->getFindPageID($pageID, false, 8178)) $plantID = 5;
+            else $plantID = 4;
+            return $plantID;
         }
     }
 ?>
