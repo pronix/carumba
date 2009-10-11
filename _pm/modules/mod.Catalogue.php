@@ -447,11 +447,14 @@
             foreach ($props as $prop)
             {
                 $nVar = _post("prop" . $prop[0]);
+                $nVarTranslit = $this->ruslat ($nVar);
                 {
-                    $q = "INSERT INTO pm_as_parts_properties (accID, propListID, propValue) VALUES($accID, $prop[0], " . prepareVar($nVar) . ")";
-                    if (!mysql_query($q))
+                    $q = "INSERT INTO pm_as_parts_properties (accID, propListID, propValue, propValueTranslit) VALUES($accID, $prop[0], " . prepareVar($nVar) . ", ".prepareVar($nVarTranslit).")";
+                    $result = mysql_query($q);
+                    if (!$result)
                         trigger_error("Error inserting specific properties - " . mysql_error(), PM_FATAL);
                 }
+                //exit;
             }
         }
 
@@ -1140,9 +1143,9 @@ ORDER BY s2.ShortTitle
 
 							foreach($subCats as $subCat) {
 								if($this->FILTER_CONSTANT_ARRAY[$pageID]['showSubCatsOnly']) {
-									$subcats_params .= $this->addInputType("propVal-".$j, $bsID."_".$subCat['propValue'], "<a class=\"levm\" href=\"?propVal-".$j."=".$bsID."_".$subCat['propValue']."\">" . $subCat['propValue'] . " (".$subCat['countNum'].")</a>", $this->FILTER_CONSTANT_ARRAY[$pageID]['paramType'])."<br/>\n";
+									$subcats_params .= $this->addInputType("propVal-".$j, $bsID."_".$subCat['propValueTranslit'], "<a class=\"levm\" href=\"?propVal-".$j."=".$bsID."_".$subCat['propValueTranslit']."\">" . $subCat['propValue'] . " (".$subCat['countNum'].")</a>", $this->FILTER_CONSTANT_ARRAY[$pageID]['paramType'])."<br/>\n";
 								} else {
-									$res .= $this->addInputType("propVal-".$j, $bsID."_".$subCat['propValue'], "<a class=\"levm\" href=\"?propVal-".$j."=".$bsID."_".$subCat['propValue']."\">" . $subCat['propValue'] . " (".$subCat['countNum'].")</a>", $this->FILTER_CONSTANT_ARRAY[$pageID]['paramType'])."<br/>\n";
+									$res .= $this->addInputType("propVal-".$j, $bsID."_".$subCat['propValueTranslit'], "<a class=\"levm\" href=\"?propVal-".$j."=".$bsID."_".$subCat['propValueTranslit']."\">" . $subCat['propValue'] . " (".$subCat['countNum'].")</a>", $this->FILTER_CONSTANT_ARRAY[$pageID]['paramType'])."<br/>\n";
 								}
 								$j++;
 							}
@@ -1256,7 +1259,7 @@ ORDER BY s2.ShortTitle
 			//{
 			//	$row = mysql_fetch_assoc($result);
 			//	$propListID = $row['propListID'];
-				$subQuery = "SELECT DISTINCT pm_as_prop_list.propListID, pm_as_prop_list.propName, pm_as_categories.accCatID, pm_as_parts_properties.propValue, COUNT(pm_as_parts_properties.propID) as countNum
+				$subQuery = "SELECT DISTINCT pm_as_prop_list.propListID, pm_as_prop_list.propName, pm_as_categories.accCatID, pm_as_parts_properties.propValue, COUNT(pm_as_parts_properties.propID) as countNum, pm_as_parts_properties.propValueTranslit
 							FROM pm_as_categories, pm_structure, pm_as_prop_list, pm_as_parts_properties, pm_as_parts
 							WHERE
 							".$catIDStr."
@@ -1307,7 +1310,6 @@ ORDER BY s2.ShortTitle
             //$cats = _varByPattern('/c' . $carID . '-\\d+/');
             //$prodIDs = _varByPattern('/p-\\d+/');
 			//$propVals = _varByPattern('/propVal-\\d+/');
-
 
 			$from = _get("from");
 			$to = _get("to");
@@ -1424,8 +1426,9 @@ ORDER BY s2.ShortTitle
 			foreach($propVals as $key=>$value)
 			{
 				if($value) {
-					$param = explode("_",$value);
-					$props['props'][] = "pp.propValue = '".$param[1]."' && s.pms_sID = '".$param[0]."'";
+                    preg_match("/^(\d+)_(.*)$/", $value, $matches);
+                    $param = array($matches[1], $matches[2]);
+					$props['props'][] = "pp.propValueTranslit = '".$param[1]."' && s.pms_sID = '".$param[0]."'";
 					//$props['p.accCatID'][] = $param[0];
 
 					$podborArray['prop'][] = $param[1];
@@ -1586,7 +1589,7 @@ ORDER BY s2.ShortTitle
 				$params[] = "p.salePrice <= '".$to."'";
 			}
 			if($propID) {
-                $params[] = "pp1.propValue = '".$propID."'";
+                $params[] = "pp1.propValueTranslit = '".$propID."'";
                 $joinStr .= " LEFT JOIN pm_as_parts_properties pp1 ON (pp1.accID = p.accID) ";
                 //$joinStr .= " LEFT JOIN pm_as_parts_properties pp1 ON (pp1.accID = p.accID && pp1.propListID = '41') ";
 			}
@@ -1758,7 +1761,7 @@ ORDER BY s2.ShortTitle
 			{
 				if($value) {
 					$param = explode("_",$value);
-					$props['props'][] = "pp.propValue = '".$param[1]."' && s.pms_sID = '".$param[0]."'";
+					$props['props'][] = "pp.propValueTranslit = '".$param[1]."' && s.pms_sID = '".$param[0]."'";
 					//$props['p.accCatID'][] = $param[0];
 
 					$podborArray['prop'][] = $param[1];
@@ -2606,6 +2609,19 @@ ORDER  BY $catOrder OrderNumber";
             elseif ($structureMgr->getFindPageID($pageID, false, 8178)) $plantID = 5;
             else $plantID = 4;
             return $plantID;
+        }
+        
+        function ruslat($text)
+        {
+            $subs = array ("æ","zh","¸","yo","é","j","þ","yu","÷","ch","ù","sch","ö","tc","ó","u","ê","k","å","e","í","n","ã","g","ø","sh","ç","z","õ","h","ô","f","û","y","â","v","à","a","ï","p","ð","r","î","o","ë","l","ä","d","ý","e","ÿ","ja","ñ","s","ì","m","è","i","ò","t","á","b","ü","","ü","Ú","¨","Yo","É","J","Þ","Yu","×","Cc","Ù","Sch","Ö","Tc","Ó","U","Ê","K","Å","E","Í","N","Ã","G","Ø","Sh","Ç","Z","Õ","H","Ô","F","Û","Y","Â","V","À","A","Ï","P","Ð","R","Î","O","Ë","L","Ä","D","Æ","Zh","Ý","E","ß","Ja","Ñ","S","Ì","M","È","I","Ò","T","Á","B","Ü","","Ú","");
+            $len = count ($subs);
+            $len = ($len % 2 == 0) ? $len : $len - 1;
+            for ($i = 0 ; $i < $len; $i+=2){
+                $text = str_replace($subs[$i], $subs[$i+1], $text);
+            }
+            $text = preg_replace("/[^a-zA-Z0-9]+/","_", $text);
+            $text = trim(trim($text),"_");
+            return $text;
         }
     }
 ?>
