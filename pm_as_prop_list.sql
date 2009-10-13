@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `pm_as_prop_list` (
   `OrderNumber` int(11) NOT NULL default '1',
   PRIMARY KEY  (`propListID`),
   KEY `props_for_cat_FK` (`accCatID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=103 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=107 ;
 
 --
 -- Дамп даних таблиці `pm_as_prop_list`
@@ -131,4 +131,8 @@ INSERT INTO `pm_as_prop_list` (`propListID`, `accCatID`, `propName`, `accMeasure
 (99, 171, 'Код производителя', '', 0, 1),
 (100, 171, 'Особенности', '', 0, 2),
 (101, 182, 'Код производителя', '', 0, 1),
-(102, 182, 'Особенности', '', 0, 2);
+(102, 182, 'Особенности', '', 0, 2),
+(103, 152, 'Тип', '', 0, 1),
+(104, 152, 'Мощность', '', 0, 2),
+(105, 152, 'Панель', '', 0, 3),
+(106, 152, 'Особенности', '', 0, 4);
