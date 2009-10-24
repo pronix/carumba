@@ -1,5 +1,4 @@
 <?
-
 function processAdminCommand($cmd, $pageID)
 {
     global $modulesMgr, $structureMgr, $authenticationMgr, $permissionsMgr, $cacheMgr, $templatesMgr;
@@ -641,7 +640,7 @@ function renderProperties(&$eVars)
                 $DataType   = _get('DataType');
                 $refCmd     = _get('cmd');
 
-                $jsText = "<script> function delCar(carID, carName) {if (confirm('При удалении совместимость с этой маркой будет удалена у всех товаров. Удалить '+carName+'?')) { window.location='/carumba/admin/?cmd=actCar&act=del&carID='+carID+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} } function addCar() {var carName = document.getElementById('carName').value; if (carName == '') {alert('Название марки не заполнено!'); return false;} if (confirm('Добавить новую марку авто '+carName+'?')) { window.location='/carumba/admin/?cmd=actCar&act=add&carName='+carName+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} }</script>";
+                $jsText = "<script> function delCar(carID, carName) {if (confirm('Вы действительно хотите удалить '+carName+'?')) { window.location='/admin/?cmd=actCar&act=del&carID='+carID+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} } function addCar() {var carName = document.getElementById('carName').value; if (carName == '') {alert('Название марки не заполнено!'); return false;} if (confirm('Добавить новую марку авто '+carName+'?')) { window.location='/admin/?cmd=actCar&act=add&carName='+carName+'&refCmd=$refCmd&pms_sID=$pageID&ModuleName=$ModuleName&DataType=$DataType';} else {return false;} }</script>";
                 //$jsText = "<script>function delCar() {return false;}</script>";
                 $chLines = "";
                 foreach($v[3] as $carID => $carModel)
@@ -1782,8 +1781,7 @@ function addCar($carName, $pms_sID, $ModuleName, $DataType, $refCmd){
     $carName = mysql_escape_string(trim($carName));
     $pms_sID = (int) $pms_sID;
     if (! empty($carName)) {
-        $catalogID =  $structureMgr->getParentPageID($structureMgr->getParentPageID($pms_sID));
-        $plantID = $modulesMgr->execute("Catalogue", "getCarPlantByPageID", array($catalogID), false);
+        $plantID = $modulesMgr->execute("Catalogue", "getCarPlantByPageID", array($pms_sID), false);
         mysql_query("INSERT INTO pm_as_cars (plantID, carModel) VALUES('$plantID', '$carName')");
     }
     $get = "";

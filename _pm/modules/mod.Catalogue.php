@@ -1022,11 +1022,10 @@
 
             //We need to generate cars list
             if ($sData["MustUseCompatibility"][2])
-            {                    
+            {          
                 $plantID = $this->getCarPlantByPageID(array($pageID));
                 $cars = $this->getCarsList($plantID);
                 $carCount = count($cars);
-
                 //script to switch layers with categories that match the concrete car
                 $jsText = "<script>var tempCarID = 'catForCar0'; </script>";
                 $carlist = $jsText . "<table width='100%'><tr><td>";
@@ -1100,7 +1099,6 @@ ORDER BY s2.ShortTitle
                 }
                 
                 $carlist .= "</td></tr></table>";  
-
                 $catsForCar .= "<div id=\"catForCar0\">";
                 for ($i=0; $i < count($branch); $i++)
                 {
@@ -2605,10 +2603,29 @@ ORDER  BY $catOrder OrderNumber";
             global $structureMgr;
             // sIDs and plantIDs hardcoded
             $pageID = $args[0];
-            if ($structureMgr->getFindPageID($pageID, false, 4)) $plantID = 2;
-            elseif ($structureMgr->getFindPageID($pageID, false, 8178)) $plantID = 5;
+            
+            if ( $this->getFindPageParent( $pageID, 4 ) ) $plantID = 2;
+            elseif ( $this->getFindPageParent( $pageID, 8178 ) ) $plantID = 5;
             else $plantID = 4;
+            // Depricated
+            /*if ($structureMgr->getFindPageID($pageID, false, 4)) $plantID = 2;
+            elseif ($structureMgr->getFindPageID($pageID, false, 8178)) $plantID = 5;
+            else $plantID = 4;*/
             return $plantID;
+        }
+        
+        /**
+         * Determines the parent of page recursively
+         */
+        function getFindPageParent( $pageID, $parentID ){
+            global $structureMgr;
+            if ( $pageID == $parentID ) { 
+                return true;
+            } else {
+                if ( null === $pageID )
+                    return false;
+                return $this->getFindPageParent( $structureMgr->getParentPageID( $pageID ),  $parentID );
+            }
         }
         
         function ruslat($text)
