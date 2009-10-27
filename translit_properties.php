@@ -41,8 +41,8 @@ function ruslat($text)
 	for ($i = 0 ; $i < $len; $i+=2){
 		$text = str_replace($subs[$i], $subs[$i+1], $text);
 	}
-	$text = preg_replace("/[^a-zA-Z0-9]+/","_", $text);
-	$text = trim(trim($text),"_");
+	$text = preg_replace("/[^a-zA-Z0-9]+/","-", $text);
+	$text = trim(trim($text),"-");
 	return $text;
 }
 ?>

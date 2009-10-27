@@ -373,7 +373,7 @@
                         
                         $plantID = $this->getCarPlantByPageID(array($ida));
                         
-                        $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID) WHERE c.plantID=".$plantID;
+                        $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID) WHERE c.plantID=" . $plantID . " ORDER c.carModel";
                         $qr2 = mysql_query($q2);
 
                         if (!$qr2)
@@ -988,7 +988,7 @@
         function getCarsList($plantID = 2)
         {
             
-            $q = "SELECT carID, plantName, carModel FROM pm_as_cars c LEFT JOIN pm_as_autocreators a ON (a.plantID = c.plantID) WHERE c.plantID=".$plantID." ORDER BY carID";
+            $q = "SELECT carID, plantName, carModel FROM pm_as_cars c LEFT JOIN pm_as_autocreators a ON (a.plantID = c.plantID) WHERE c.plantID=".$plantID." ORDER BY carModel";
             $qr = mysql_query($q);
 
             if (!$qr)
@@ -1022,10 +1022,11 @@
 
             //We need to generate cars list
             if ($sData["MustUseCompatibility"][2])
-            {          
+            {                    
                 $plantID = $this->getCarPlantByPageID(array($pageID));
                 $cars = $this->getCarsList($plantID);
                 $carCount = count($cars);
+
                 //script to switch layers with categories that match the concrete car
                 $jsText = "<script>var tempCarID = 'catForCar0'; </script>";
                 $carlist = $jsText . "<table width='100%'><tr><td>";
@@ -1099,6 +1100,7 @@ ORDER BY s2.ShortTitle
                 }
                 
                 $carlist .= "</td></tr></table>";  
+
                 $catsForCar .= "<div id=\"catForCar0\">";
                 for ($i=0; $i < count($branch); $i++)
                 {
@@ -1615,7 +1617,7 @@ ORDER BY s2.ShortTitle
             //$orderStr = ' ORDER BY rating DESC';
 			$query = "SELECT DISTINCT SQL_CALC_FOUND_ROWS
 					p.accID, p.sID, ShortTitle, deliveryCode, accPlantName, logotype, smallPicture, s.tplID, salePrice,
-					MustUseCompatibility, PicturePath, DescriptionTemplate, ptPercent, p.ptID, p.new, p.xit, p.main,
+					MustUseCompatibility, PicturePath, DescriptionTemplate, ptPercent, p.ptID, p.new, p.xit, p.main,pp.propValue,
 					    (SELECT SUM( r.grade ) / r.count /3
                         FROM pm_rating r
                         WHERE r.sID = s.sID
@@ -1652,7 +1654,7 @@ ORDER BY s2.ShortTitle
 				{
 					$item["Compatibility"] = "";
 					$query2 = "SELECT atc.carID, carModel, carName FROM pm_as_acc_to_cars atc LEFT JOIN pm_as_cars c ON (c.carID = atc.carID)
-					WHERE accID=" . $item["accID"];
+					WHERE accID=" . $item["accID"] . " ORDER BY carModel";
 					$result2 = mysql_query($query2);
 
 					if (!$result2)
@@ -2427,7 +2429,7 @@ ORDER BY s2.ShortTitle
             {
                 $res["Compatibility"] = "";
                 $q2 = "SELECT atc.carID, carModel, carName FROM pm_as_acc_to_cars atc LEFT JOIN pm_as_cars c ON (c.carID = atc.carID)
-                WHERE accID=" . $res["accID"];
+                WHERE accID=" . $res["accID"] . " ORDER BY carModel";
                 $qr2 = mysql_query($q2);
 
                 if (!$qr2)
@@ -2636,8 +2638,8 @@ ORDER  BY $catOrder OrderNumber";
             for ($i = 0 ; $i < $len; $i+=2){
                 $text = str_replace($subs[$i], $subs[$i+1], $text);
             }
-            $text = preg_replace("/[^a-zA-Z0-9]+/","_", $text);
-            $text = trim(trim($text),"_");
+            $text = preg_replace("/[^a-zA-Z0-9]+/","-", $text);
+            $text = trim(trim($text),"-");
             return $text;
         }
     }

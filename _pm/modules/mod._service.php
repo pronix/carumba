@@ -11,16 +11,19 @@
         function getPageTitle($args)
         {
             global $structureMgr;
-            //print_r($args);
-			$str = $structureMgr->getTitleFromParams();
-
+            if ( isset( $args['IS_PODBOR'] ) ) 
+                $str = $structureMgr->getTitleFromParamsTranslit();
+            else
+                $str = $structureMgr->getTitleFromParams();
+            
             if ($args[0] != -1)
             {
                 $metaData = $structureMgr->getMetaData($args[0]);
+                //echo "<pre>"; var_dump($args, $metaData["ShortTitle"], $str); exit;
 				if(!$str)
                 return ($metaData["Title"] ? $metaData["Title"] : $metaData["ShortTitle"])." ".$str;
             }
-
+            //echo "<pre>"; var_dump($str); exit;
             return $str;
         }
 

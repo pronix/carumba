@@ -600,5 +600,91 @@
 		}
 
 
+    
+    function getTitleFromParamsTranslit($cats = 0, $prodIDs = 0, $propVals = 0, $carID = 0)
+    {
+
+			if(!$cats) {
+				$cats = _varByPattern('/c-\\d+/');
+			}
+			if(!$prodIDs) {
+				$prodIDs = _varByPattern('/p-\\d+/');
+			}
+			if(!$propVals) {
+				$propVals = _varByPattern('/propVal-\\d+/');
+			}
+			if(!$carID) {
+				$carID = _var('carID');
+			}
+
+			$shownCats = array();
+			$shownProds = array();
+			$shownProps = array();
+			$resArray = array();
+
+			foreach ( $cats as $pageID ) {
+				if ( !in_array( $pageID, $shownCats ) ) {
+					$metaData = $this->getMetaData($pageID);
+					$resArray['cats'][] = ($metaData['Title'] ? $metaData['Title'] : $metaData['ShortTitle']);
+					$shownCats[] = $pageID;
+				}
+			}
+
+			foreach ($propVals as $prop) {
+				$val = explode('_', $prop);
+				if(!in_array($val[0], $shownCats)) {
+					$metaData = $this->getMetaData($val[0]);
+					$resArray['cats'][] = ($metaData['Title'] ? $metaData['Title'] : $metaData['ShortTitle']);
+					$shownCats[] = $val[0];
+				}
+			}
+
+			if ( $carID ) {
+				$query = 'SELECT pm_as_cars.carName, pm_as_cars.carModel,
+				                 pm_as_autocreators.plantName
+				            FROM pm_as_cars, pm_as_autocreators
+				            WHERE pm_as_cars.plantID = pm_as_autocreators.plantID
+				                AND pm_as_cars.carID = "'.$carID.'"';
+				$result = mysql_query($query);
+				$row = mysql_fetch_assoc($result);
+				$resArray['other'][] = $row['plantName'].' '.($row['carName'] ? $row['carModel'].$row['carName'] : $row['carModel'] );
+			}
+
+			foreach ( $prodIDs as $prodID ) {
+				if ( !in_array($prodID, $shownProds) ) {
+					$query = 'SELECT * FROM pm_as_producer WHERE accPlantID="'.$prodID.'"';
+					$result = mysql_query($query);
+					$row = mysql_fetch_assoc($result);
+					$resArray['other'][] = $row['accPlantName'];
+					$shownProds[] = $prodID;
+				}
+			}
+
+			foreach ( $propVals as $prop ) {
+				$val = explode('_', $prop);
+				if(!in_array($val[1], $shownProps)) {
+					$resArray['other'][] = $val[1];
+					$shownProps[] = $val[0];
+				}
+			}
+
+            if ( isset($resArray['cats']) && count($resArray['cats']) ) {
+                $str = trim(implode(', ', $resArray['cats']));
+                if (!empty($resArray['other']) && count($resArray['other'])) {
+                    foreach ( $resArray['other'] as $key => $val ) {
+                        $query = sprintf( "SELECT propValue FROM pm_as_parts_properties WHERE propValueTranslit = '%s' LIMIT 1", $val );
+                        $result = mysql_query($query);
+                        if ( 0 != mysql_num_rows( $result ) )
+                            $resArray['other'][$key] = mysql_result( $result, 0 );
+                    }
+                    $str.=': '.implode(', ', $resArray['other']);
+                }
+                return $str;
+            } else {
+                return '';
+            }
+		}
+
+
     }
 ?>
