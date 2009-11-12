@@ -1631,6 +1631,7 @@ ORDER BY s2.ShortTitle
 					LEFT JOIN pm_as_pricetypes pt ON (pt.ptID = p.ptID)
 					WHERE p.notAvailable = 0 && s.isHidden=0
 					".$paramsStr."
+                    GROUP BY p.accID
 					".$orderStr."
 					LIMIT ".$startFrom.",".GetCfg("Catalogue.itemsPerPage");
             //trigger_error($query, PM_FATAL);
