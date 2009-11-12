@@ -1634,7 +1634,6 @@ ORDER BY s2.ShortTitle
                     GROUP BY p.accID
 					".$orderStr."
 					LIMIT ".$startFrom.",".GetCfg("Catalogue.itemsPerPage");
-                
             //trigger_error($query, PM_FATAL);
 			//print $query."<br><br>".$pr."<br><br>".$pr1;
 			$result = mysql_query($query);
