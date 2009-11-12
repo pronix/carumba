@@ -373,7 +373,7 @@
                         
                         $plantID = $this->getCarPlantByPageID(array($ida));
                         
-                        $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID) WHERE c.plantID=" . $plantID . " ORDER c.carModel";
+                        $q2 = "SELECT c.carID, CONCAT(plantName, ' ', carModel) FROM pm_as_cars c LEFT JOIN pm_as_autocreators ac ON (ac.plantID = c.plantID) WHERE c.plantID=" . $plantID . " ORDER BY c.carModel";
                         $qr2 = mysql_query($q2);
 
                         if (!$qr2)
